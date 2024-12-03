@@ -9,6 +9,6 @@
     "contributors": ["MrMadera"],
     "dependencies": 
     {
-
+        "flixel": "5.5.0"
     }
 }
