@@ -19,6 +19,13 @@
         "name": "flixel",
         "type": "haxelib",
         "version": null
+      },
+      {
+        "name": "extended-flixel",
+        "type": "git",
+        "dir": null,
+        "ref": "main",
+        "url": "https://github.com/MrMadera/extended-flixel"
       }
   ]
 }
