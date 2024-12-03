@@ -11,7 +11,12 @@ class ExtendedSprite extends FlxSprite
         {
             simpleGraphic = 'assets/images/no_image.png';
         }
-        
+
         super(x, y, simpleGraphic);
+    }
+
+    public function addSparrowAnimation(name:String, anim:String, framerate:Int, loop:Bool)
+    {
+        animation.addByPrefix(name, anim, framerate, loop);
     }
 }
