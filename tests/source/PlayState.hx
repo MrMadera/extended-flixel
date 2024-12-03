@@ -9,7 +9,10 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		var sprite = new ExtendedSprite(0, 0); 
+
+		var sprite = new ExtendedSprite(0, 0, 'assets/images/BOYFRIEND.png', true);
+		sprite.addSparrowAnimation('idle', 'BF idle dance', 24, true);
+		sprite.playAnim('idle');
 		sprite.screenCenter();
 		add(sprite);
 	}
