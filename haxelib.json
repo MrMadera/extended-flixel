@@ -3,12 +3,12 @@
     "url" : "https://github.com/MrMadera/extended-flixel",
     "license": "MIT",
     "tags": ["haxe", "flixel"],
-    "description": "Extended-Flixel is a custom library which extends some classes or the original flixel library, adding new propierties, features, etc.",
+    "description": "Extended-Flixel is a custom library which extends some classes of the original flixel library, adding new propierties, features, etc.",
     "version": "0.0.1",
     "releasenote": "First Release",
     "contributors": ["MrMadera"],
     "dependencies": 
     {
-        
+
     }
 }
