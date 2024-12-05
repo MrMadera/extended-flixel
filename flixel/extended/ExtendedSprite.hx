@@ -9,6 +9,7 @@ class ExtendedSprite extends FlxSprite
     public var graphicPath:String;
     public var isAnimated:Bool;
 
+
     public function new(x:Float = 0, y:Float = 0, ?simpleGraphic:Null<FlxGraphicAsset>, _isAnimated:Bool = false)
     {
         isAnimated = _isAnimated;
@@ -19,7 +20,9 @@ class ExtendedSprite extends FlxSprite
         }
         graphicPath = simpleGraphic;
 
-        trace('Path: $graphicPath');
+        #if debug
+            trace('Path: $graphicPath');
+        #end
 
         super(x, y, simpleGraphic);
 
@@ -41,5 +44,12 @@ class ExtendedSprite extends FlxSprite
         if(!isAnimated) return;
 
         animation.play(name);
+    }
+
+    public function playFromFrame(name:String, frame:Int)
+    {
+        if(!isAnimated) return;
+
+        animation.play(name, false, false, frame);
     }
 }
