@@ -14,6 +14,7 @@ class PlayState extends FlxState
 		sprite.addSparrowAnimation('idle', 'BF idle dance', 24, true);
 		sprite.playAnim('idle');
 		sprite.screenCenter();
+		sprite.shakeObject(3, 2);
 		add(sprite);
 	}
 

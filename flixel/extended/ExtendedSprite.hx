@@ -6,8 +6,12 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 class ExtendedSprite extends FlxSprite
 {
+    // TODO: Add descriptions to everything
+
     public var graphicPath:String;
     public var isAnimated:Bool;
+
+    public var elapsedTime:Float;
 
     public function new(x:Float = 0, y:Float = 0, ?simpleGraphic:Null<FlxGraphicAsset>, _isAnimated:Bool = false)
     {
@@ -31,6 +35,13 @@ class ExtendedSprite extends FlxSprite
         }
     }
 
+    override function update(elapsed:Float) 
+    {
+        super.update(elapsed);
+        
+        elapsedTime += elapsed;
+    }
+
     public function addSparrowAnimation(name:String, anim:String, framerate:Int, loop:Bool)
     {
         if(!isAnimated) return;
@@ -50,5 +61,21 @@ class ExtendedSprite extends FlxSprite
         if(!isAnimated) return;
 
         animation.play(name, false, false, frame);
+    }
+
+    public function shakeObject(intensity:Float, time:Float)
+    {
+        var ogX:Float = x;
+        var ogY:Float = y;
+
+        var endTime = elapsedTime + time;
+
+        sys.thread.Thread.create(() -> {
+            while(elapsedTime < endTime)
+            {
+                #if debug trace('shake time: $elapsedTime/$endTime'); #end
+                setPosition(ogX + FlxG.random.float(-intensity, intensity), ogY + FlxG.random.float(-intensity, intensity));
+            }
+        });
     }
 }
