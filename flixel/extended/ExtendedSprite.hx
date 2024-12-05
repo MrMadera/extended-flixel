@@ -9,7 +9,6 @@ class ExtendedSprite extends FlxSprite
     public var graphicPath:String;
     public var isAnimated:Bool;
 
-
     public function new(x:Float = 0, y:Float = 0, ?simpleGraphic:Null<FlxGraphicAsset>, _isAnimated:Bool = false)
     {
         isAnimated = _isAnimated;
