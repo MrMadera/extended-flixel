@@ -6,11 +6,12 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
+	var sprite:ExtendedSprite;
 	override public function create()
 	{
 		super.create();
 
-		var sprite = new ExtendedSprite(0, 0, 'assets/images/BOYFRIEND.png', true);
+		sprite = new ExtendedSprite(0, 0, 'assets/images/BOYFRIEND.png', true);
 		sprite.addSparrowAnimation('idle', 'BF idle dance', 24, true);
 		sprite.playAnim('idle');
 		sprite.screenCenter();
@@ -21,5 +22,10 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if(sprite.isOverlaping(true, true))
+		{
+			trace('You\'re overlaping bf!');
+		}
 	}
 }

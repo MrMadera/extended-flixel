@@ -78,4 +78,34 @@ class ExtendedSprite extends FlxSprite
             }
         });
     }
+
+    public function isOverlaping(pixelPerfect:Bool, getLastCamera:Bool)
+    {
+        if(pixelPerfect)
+        {
+            if(this.pixelsOverlapPoint(FlxG.mouse.getScreenPosition(FlxG.cameras.list[FlxG.cameras.list.length - 1])))
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if(getLastCamera)
+            {
+                if(this.overlapsPoint(FlxG.mouse.getScreenPosition(FlxG.cameras.list[FlxG.cameras.list.length - 1])))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(FlxG.mouse.overlaps(this))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
