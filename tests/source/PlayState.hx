@@ -25,7 +25,7 @@ class PlayState extends FlxState
 
 		if(sprite.isOverlaping(true, true))
 		{
-			trace('You\'re overlaping bf!');
+			#if debug trace('You\'re overlaping bf!'); #end
 		}
 	}
 }
