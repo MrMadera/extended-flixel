@@ -3,6 +3,8 @@ package flixel.extended;
 import flixel.FlxSprite;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 
 class ExtendedSprite extends FlxSprite
 {
@@ -107,5 +109,10 @@ class ExtendedSprite extends FlxSprite
         }
 
         return false;
+    }
+
+    public function doTween(values:Dynamic, duration:Float, ?options:TweenOptions)
+    {
+        FlxTween.tween(this, values, duration, options);
     }
 }

@@ -16,6 +16,7 @@ class PlayState extends FlxState
 		sprite.playAnim('idle');
 		sprite.screenCenter();
 		sprite.shakeObject(3, 2);
+		sprite.doTween({alpha: 0}, 2, {type: PINGPONG});
 		add(sprite);
 	}
 
