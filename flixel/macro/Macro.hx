@@ -3,6 +3,8 @@ package flixel.macro;
 import sys.io.Process;
 import sys.io.File;
 
+import flixel.net.InternetCheck;
+
 using StringTools;
 
 class Macro {
@@ -12,6 +14,7 @@ class Macro {
     {
         #if (!SKIP_MACRO)
             log('Macro from extended-flixel started!');
+            InternetCheck.execute();
         #end
 
         return macro {};
