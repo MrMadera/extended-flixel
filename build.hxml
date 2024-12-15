@@ -1,0 +1,8 @@
+-cp farfadox
+
+--each
+
+-main flixel.macro.Build
+-neko run.n
+
+--next
