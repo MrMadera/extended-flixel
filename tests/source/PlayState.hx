@@ -5,6 +5,8 @@ import flixel.text.FlxText;
 import flixel.extended.ExtendedSprite;
 import flixel.FlxState;
 
+import flixel.net.downloads.GoogleDriveDownloader;
+
 class PlayState extends FlxState
 {
 	var sprite:ExtendedSprite;
@@ -27,6 +29,23 @@ class PlayState extends FlxState
 			var txt = new FlxText(0, 600, 0, "Internet connection avaible", 16);
 			txt.screenCenter(X);
 			add(txt);
+
+			GoogleDriveDownloader.extension = 'zip';
+			GoogleDriveDownloader.autoUnzip = true;
+			//GoogleDriveDownloader.customOutputPath = 'C:/Users/User/Desktop';
+			GoogleDriveDownloader.onSuccess = function()
+			{
+			    trace('Download completed!');
+			}
+			GoogleDriveDownloader.onCancel = function()
+			{
+			    trace('Download canceled!');
+			}
+			GoogleDriveDownloader.onZipSuccess = function()
+			{
+			    trace('Unzip process completed!');
+			}
+			new GoogleDriveDownloader("https://drive.google.com/file/d/1aoQrga81pQQBM0zgKp8EhcEhn2iyDh7g/view?usp=sharing", "test_file");
 		});
 	}
 
