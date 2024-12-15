@@ -14,7 +14,6 @@ class Macro {
     {
         #if (!SKIP_MACRO)
             log('Macro from extended-flixel started!');
-            InternetCheck.execute();
         #end
 
         return macro {};

@@ -1,5 +1,6 @@
 package;
 
+import flixel.net.InternetCheck;
 import flixel.text.FlxText;
 import flixel.extended.ExtendedSprite;
 import flixel.FlxState;
@@ -18,6 +19,15 @@ class PlayState extends FlxState
 		sprite.shakeObject(3, 2);
 		sprite.doTween({alpha: 0}, 2, {type: PINGPONG});
 		add(sprite);
+
+		InternetCheck.execute(function(success:Bool)
+		{
+			if(!success) return;
+
+			var txt = new FlxText(0, 600, 0, "Internet connection avaible", 16);
+			txt.screenCenter(X);
+			add(txt);
+		});
 	}
 
 	override public function update(elapsed:Float)

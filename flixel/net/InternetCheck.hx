@@ -1,20 +1,27 @@
 package flixel.net;
 
 import sys.net.Host;
+import haxe.Http;
 
 class InternetCheck
 {
-    public static function execute()
+    public static var isConnected:Bool;
+    public static function execute(callback:Bool->Void)
     {
-        try 
+        var url = "https://www.google.com";
+        var http = new Http(url);
+        http.onData = function(data) 
         {
-            @:privateAccess
-            var host = Host.resolve("google.com");
-            trace('Connected to internet: ${(host != null)}');
-        }
-        catch(exc)
+            trace('fetching data!');
+            callback(true);
+        };
+        http.onError = function(error) 
         {
-            trace('Not connected to internet.');
-        }
+            trace("Error: " + error);
+            callback(false);
+        };
+        http.request(false);
+        Sys.sleep(2);
+        isConnected = false;
     }
 }
