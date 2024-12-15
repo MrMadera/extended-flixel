@@ -2,12 +2,11 @@ package flixel.macro;
 
 import sys.io.Process;
 import sys.io.File;
-import farfadox.Version;
 
 using StringTools;
 
 class Macro {
-    
+
     macro
     public static function initiateMacro()
     {
