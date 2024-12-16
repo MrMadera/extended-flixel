@@ -242,10 +242,13 @@ class GoogleDriveDownloader
             trace('Headers map: ' + headers);
 
             #if debug
-                var defaultOutputPath:String = StringTools.replace(Sys.programPath(), 'farfadox-utils-example.exe', '');
-                defaultOutputPath += 'downloads/headers.txt';
+                var oldoutputFilePath:String = Sys.programPath();
+                var index = oldoutputFilePath.lastIndexOf("\\");
+                var defaultOutputPathDebug:String = oldoutputFilePath.substr(0, index);
+                
+                defaultOutputPathDebug += '/downloads/headers.txt';
 
-                File.saveContent(defaultOutputPath, headers.toString());
+                File.saveContent(defaultOutputPathDebug, headers.toString());
             #end
         }
 		if (headers.exists("content-length")) // take max bytes length
