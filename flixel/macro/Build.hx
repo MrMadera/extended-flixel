@@ -37,7 +37,7 @@ class Build
             log("ERROR: HAXEPATH is not defined. Aborting...");
             Sys.exit(1);
         }
-        var filePath = haxePath + '/farfadox-utils.cmd';
+        var filePath = haxePath + '/extended-flixel.cmd';
 
         File.saveContent(filePath, cmdContent);
 
