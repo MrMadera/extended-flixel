@@ -14,6 +14,7 @@ class Macro {
     {
         #if (!SKIP_MACRO)
             log('Macro from extended-flixel started!');
+            log('Building at ${Date.now()}');
         #end
 
         return macro {};
