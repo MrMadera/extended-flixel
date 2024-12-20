@@ -3,6 +3,7 @@ package;
 import flixel.net.InternetCheck;
 import flixel.text.FlxText;
 import flixel.extended.ExtendedSprite;
+import flixel.extended.ExtendedText;
 import flixel.FlxState;
 
 import flixel.net.downloads.GoogleDriveDownloader;
@@ -26,8 +27,9 @@ class PlayState extends FlxState
 		{
 			if(!success) return;
 
-			var txt = new FlxText(0, 600, 0, "Internet connection avaible", 16);
+			var txt = new ExtendedText(0, 600, 0, "Internet connection avaible", 16);
 			txt.screenCenter(X);
+			txt.setBold(true);
 			add(txt);
 
 			GoogleDriveDownloader.extension = 'zip';
