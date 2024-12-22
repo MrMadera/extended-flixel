@@ -20,6 +20,7 @@ class Macro {
                 log('');
                 log(extendedFlixelText);
 
+                log('');
                 log('Checking for internet connection...');
                 checkingInternetConnection();
             #end
