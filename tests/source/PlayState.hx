@@ -31,6 +31,7 @@ class PlayState extends FlxState
 			txt.color = 0xFF088026;
 			txt.screenCenter(X);
 			txt.setBold(true);
+			txt.addMarkup("Internet connection /avaible/", 0xFF22C77A, '/');
 			txt.setItalic(true);
 			add(txt);
 

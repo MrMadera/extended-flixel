@@ -1,6 +1,7 @@
 package flixel.extended;
 
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 
 class ExtendedText extends FlxText
 {
@@ -17,5 +18,10 @@ class ExtendedText extends FlxText
     public function setItalic(isitalic:Bool)
     {
         italic = isitalic;
+    }
+
+    public function addMarkup(text:String, color:FlxColor, char:String)
+    {
+        applyMarkup(text, [new FlxTextFormatMarkerPair(new FlxTextFormat(color), char)]);
     }
 }
