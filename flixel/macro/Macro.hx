@@ -49,11 +49,7 @@ class Macro {
         #end
     }
 
-    static var extendedFlixelText:String = "
-         _             _       _     ___ _ _         _ 
- ___ _ _| |_ ___ ___ _| |___ _| |___|  _| |_|_ _ ___| |
-| -_|_'_|  _| -_|   | . | -_| . |___|  _| | |_'_| -_| |
-|___|_,_|_| |___|_|_|___|___|___|   |_| |_|_|_,_|___|_|";
+    static var extendedFlixelText:String = File.getContent('assets/data/extended-flixel.txt');
 
         
 }
