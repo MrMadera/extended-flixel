@@ -16,8 +16,7 @@ class Macro {
             log('Macro from extended-flixel started!');
             log('Building at ${Date.now()}');
             #if (debug || extended_macro)
-                log('[DEBUG] Enabled.');
-                log('');
+                log('--------------- [DEBUG MACRO ENABLED] ---------------');
                 log(extendedFlixelText);
 
                 log('');
@@ -31,7 +30,7 @@ class Macro {
 
     static function checkingInternetConnection()
     {
-        InternetCheck.execute(function(success:Bool) 
+        InternetCheck.executeCurl(function(success:Bool) 
         {
             if(success) {
                 log('Internet connection is available.');
@@ -49,7 +48,11 @@ class Macro {
         #end
     }
 
-    static var extendedFlixelText:String = File.getContent('assets/data/extended-flixel.txt');
+    static var extendedFlixelText:String = "
+         _             _       _     ___ _ _         _ 
+ ___ _ _| |_ ___ ___ _| |___ _| |___|  _| |_|_ _ ___| |
+| -_|_'_|  _| -_|   | . | -_| . |___|  _| | |_'_| -_| |
+|___|_,_|_| |___|_|_|___|___|___|   |_| |_|_|_,_|___|_|";
 
         
 }

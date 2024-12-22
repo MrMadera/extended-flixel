@@ -68,6 +68,7 @@ class Build
                 customFlags = flagHelpder;
             }
 
+            usingCustomCommand = true;
             // starting compilation
             var arrayOfOs = osHelper.split(",");
             for(os in arrayOfOs)
@@ -87,6 +88,7 @@ class Build
                 else if(os == 'mac' || os == 'm') Sys.command("lime build mac -verbose " + customFlags);
                 else if(os == 'linux' || os == 'l') Sys.command("lime build linux -verbose " + customFlags);
             }
+            usingCustomCommand = false;
         }
         else
         {
@@ -104,4 +106,6 @@ class Build
     }
     
     static var warningText:String = File.getContent('assets/data/warning.txt');
+    static var extendedFlixelText:String = File.getContent('assets/data/extendedflixel.txt');
+    public static var usingCustomCommand:Bool = false;
 }
