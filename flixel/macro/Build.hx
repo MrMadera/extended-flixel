@@ -51,14 +51,36 @@ class Build
         log(warningText);
         log("");
         log("You're gonna execute a custom build process which is right now in BETA.");
-        Sys.sleep(0.6);
-        log("Building...");
-        Sys.sleep(0.4);
+        log("");
+        Sys.print("Which OS are you building? [you can put more than one separeted by comma] (windows/mac/linux)");
+        var osHelper = Sys.stdin().readLine();
+        var array = osHelper.split(",");
+        if(["w", "windows", "m", "mac", "l", "linux"].contains(array[0]))
+        {
+            var arrayOfOs = osHelper.split(",");
+            for(os in arrayOfOs)
+            {
+                var osName:String = "";
+                if(os == 'windows' || os == 'w') osName = "Windows";
+                else if(os == 'mac' || os == 'm') osName = "Mac";
+                else if(os == 'linux' || os == 'l') osName = "Linux";
 
-        var curDirectory = Sys.args().copy().pop();
-        Sys.setCwd(curDirectory);
+                log("Building for " + osName + "...");
+                Sys.sleep(0.4);
         
-        Sys.command("lime build windows -verbose");
+                var curDirectory = Sys.args().copy().pop();
+                Sys.setCwd(curDirectory);
+                
+                if(os == 'windows' || os == 'w') Sys.command("lime build windows -verbose");
+                else if(os == 'mac' || os == 'm') Sys.command("lime build mac -verbose");
+                else if(os == 'linux' || os == 'l') Sys.command("lime build linux -verbose");
+            }
+        }
+        else
+        {
+            log("Invalid OS. Aborting...");
+            Sys.exit(1);
+        }
     }
 
     public static function log(?log:String = "") {
