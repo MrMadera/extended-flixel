@@ -21,6 +21,8 @@ class Build
             case "setup":
                 Sys.println("Setup started!");
                 setup();
+            case "build":
+                build();
             default:
                 Sys.println("Unknown command: " + args[0]);
         }    
@@ -44,6 +46,28 @@ class Build
         log("Done.");
     }
 
+    static var started:Bool = false;
+    static var timer:Float = 0;
+
+    static function build()
+    {
+        log(warningText);
+        log("");
+        log("You're gonna execute a custom build process which is right now in BETA.");
+        Sys.sleep(0.6);
+        log("Building...");
+        Sys.sleep(0.4);
+        started = true;
+        Sys.command("lime build windows -verbose");
+        started = false;
+        log('Build took: $timer seconds');
+    }
+
+    function update(elapsed:Float)
+    {
+        if(started) timer += elapsed;
+    }
+
     public static function log(?log:String = "") {
         #if sys
         Sys.println(log);
@@ -51,4 +75,6 @@ class Build
         trace('\n' + log);
         #end
     }
+    
+    static var warningText:String = File.getContent('assets/data/warning.txt');
 }
