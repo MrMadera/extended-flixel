@@ -52,11 +52,23 @@ class Build
         log("");
         log("You're gonna execute a custom build process which is right now in BETA.");
         log("");
-        Sys.print("Which OS are you building? [you can put more than one separeted by comma] (windows/mac/linux)");
+        Sys.print("Which OS are you building? [you can put more than one separeted by comma] (windows/mac/linux) ");
         var osHelper = Sys.stdin().readLine();
         var array = osHelper.split(",");
         if(["w", "windows", "m", "mac", "l", "linux"].contains(array[0]))
         {
+            // custom flags
+            var customFlags:String = "";
+
+            log("");
+            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
+            var flagHelpder = Sys.stdin().readLine();
+            if(flagHelpder.toLowerCase().trim() != "")
+            {
+                customFlags = flagHelpder;
+            }
+
+            // starting compilation
             var arrayOfOs = osHelper.split(",");
             for(os in arrayOfOs)
             {
@@ -71,9 +83,9 @@ class Build
                 var curDirectory = Sys.args().copy().pop();
                 Sys.setCwd(curDirectory);
                 
-                if(os == 'windows' || os == 'w') Sys.command("lime build windows -verbose");
-                else if(os == 'mac' || os == 'm') Sys.command("lime build mac -verbose");
-                else if(os == 'linux' || os == 'l') Sys.command("lime build linux -verbose");
+                if(os == 'windows' || os == 'w') Sys.command("lime build windows -verbose " + customFlags);
+                else if(os == 'mac' || os == 'm') Sys.command("lime build mac -verbose " + customFlags);
+                else if(os == 'linux' || os == 'l') Sys.command("lime build linux -verbose " + customFlags);
             }
         }
         else
