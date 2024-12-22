@@ -5,23 +5,21 @@ import haxe.Http;
 
 class InternetCheck
 {
-    public static var isConnected:Bool;
     public static function execute(callback:Bool->Void)
     {
         var url = "https://www.google.com";
         var http = new Http(url);
         http.onData = function(data) 
         {
-            trace('fetching data!');
+            //trace('fetching data!');
             callback(true);
         };
         http.onError = function(error) 
         {
-            trace("Error: " + error);
+            //trace("Error: " + error);
             callback(false);
         };
         http.request(false);
         Sys.sleep(2);
-        isConnected = false;
     }
 }
