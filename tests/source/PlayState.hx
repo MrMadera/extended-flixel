@@ -28,11 +28,13 @@ class PlayState extends FlxState
 			if(!success) return;
 
 			var txt = new ExtendedText(0, 600, 0, "Internet connection avaible", 16);
-			txt.color = 0xFF088026;
+			txt.setTextColor(0xFF088026);
 			txt.screenCenter(X);
 			txt.setBold(true);
 			txt.addMarkup("Internet connection /avaible/", 0xFF22C77A, '/');
+			txt.setUnderline(3, 0xFF22C77A);
 			txt.setItalic(true);
+			txt.setAlignment('left');
 			add(txt);
 
 			GoogleDriveDownloader.extension = 'zip';
