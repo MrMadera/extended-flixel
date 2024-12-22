@@ -106,6 +106,5 @@ class Build
     }
     
     static var warningText:String = File.getContent('assets/data/warning.txt');
-    static var extendedFlixelText:String = File.getContent('assets/data/extendedflixel.txt');
     public static var usingCustomCommand:Bool = false;
 }
