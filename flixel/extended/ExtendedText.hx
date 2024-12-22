@@ -13,4 +13,9 @@ class ExtendedText extends FlxText
     {
         bold = isbold;
     }
+
+    public function setItalic(isitalic:Bool)
+    {
+        italic = isitalic;
+    }
 }

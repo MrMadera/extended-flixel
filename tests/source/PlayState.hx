@@ -31,6 +31,7 @@ class PlayState extends FlxState
 			txt.color = 0xFF088026;
 			txt.screenCenter(X);
 			txt.setBold(true);
+			txt.setItalic(true);
 			add(txt);
 
 			GoogleDriveDownloader.extension = 'zip';
@@ -48,7 +49,7 @@ class PlayState extends FlxState
 			{
 			    trace('Unzip process completed!');
 			}
-			new GoogleDriveDownloader("https://drive.google.com/file/d/1aoQrga81pQQBM0zgKp8EhcEhn2iyDh7g/view?usp=sharing", "test_file");
+			//new GoogleDriveDownloader("https://drive.google.com/file/d/1aoQrga81pQQBM0zgKp8EhcEhn2iyDh7g/view?usp=sharing", "test_file");
 		});
 	}
 
