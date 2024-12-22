@@ -46,9 +46,6 @@ class Build
         log("Done.");
     }
 
-    static var started:Bool = false;
-    static var timer:Float = 0;
-
     static function build()
     {
         log(warningText);
@@ -57,15 +54,11 @@ class Build
         Sys.sleep(0.6);
         log("Building...");
         Sys.sleep(0.4);
-        started = true;
-        Sys.command("lime build windows -verbose");
-        started = false;
-        log('Build took: $timer seconds');
-    }
 
-    function update(elapsed:Float)
-    {
-        if(started) timer += elapsed;
+        var curDirectory = Sys.args().copy().pop();
+        Sys.setCwd(curDirectory);
+        
+        Sys.command("lime build windows -verbose");
     }
 
     public static function log(?log:String = "") {
