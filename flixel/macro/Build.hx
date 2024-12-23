@@ -83,9 +83,9 @@ class Build
                 var curDirectory = Sys.args().copy().pop();
                 Sys.setCwd(curDirectory);
                 
-                if(os == 'windows' || os == 'w') Sys.command("lime build windows -verbose " + customFlags);
-                else if(os == 'mac' || os == 'm') Sys.command("lime build mac -verbose " + customFlags);
-                else if(os == 'linux' || os == 'l') Sys.command("lime build linux -verbose " + customFlags);
+                if(os == 'windows' || os == 'w') Sys.command("lime build windows " + customFlags);
+                else if(os == 'mac' || os == 'm') Sys.command("lime build mac " + customFlags);
+                else if(os == 'linux' || os == 'l') Sys.command("lime build linux " + customFlags);
             }
         }
         else
