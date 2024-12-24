@@ -1,7 +1,9 @@
 package flixel.macro;
 
+import sys.FileSystem;
 import sys.io.Process;
 import sys.io.File;
+import Math;
 
 using StringTools;
 
@@ -82,10 +84,14 @@ class Build
         
                 var curDirectory = Sys.args().copy().pop();
                 Sys.setCwd(curDirectory);
+
+                createBuildFile();
                 
                 if(os == 'windows' || os == 'w') Sys.command("lime build windows " + customFlags);
                 else if(os == 'mac' || os == 'm') Sys.command("lime build mac " + customFlags);
                 else if(os == 'linux' || os == 'l') Sys.command("lime build linux " + customFlags);
+
+                calculateBuildTime();
             }
         }
         else
@@ -93,6 +99,33 @@ class Build
             log("Invalid OS. Aborting...");
             Sys.exit(1);
         }
+    }
+
+    static function createBuildFile()
+    {
+        var content:String = Date.now().toString();
+        File.append("build_time.BUILD", false);
+        File.saveContent("build_time.BUILD", content);
+        log('BUILD FILE CREATED!');
+    }
+
+    static function calculateBuildTime()
+    {
+        var dateWhenBuildStarted = Date.fromString(File.getContent("build_time.BUILD"));
+        log('The file was created in $dateWhenBuildStarted');
+
+        var currentDate = Date.now();
+        log('The current time is $currentDate');
+
+        var difference = currentDate.getTime() - dateWhenBuildStarted.getTime();
+        log('The difference (in milliseconds) is ${currentDate.getTime()} - ${dateWhenBuildStarted.getTime()} = $difference');
+
+        var seconds = difference / 1000;
+        log('Dividing by 1000 we get $seconds');
+        log('Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)');
+
+        //FileSystem.deleteFile("build_time.BUILD");
+        //log('BUILD FILE DELETED!');
     }
 
     public static function log(?log:String = "") {
