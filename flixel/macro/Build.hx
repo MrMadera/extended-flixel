@@ -20,10 +20,10 @@ class Build
 
         switch (args[0]) 
         {
-            case "setup":
+            case "setup" | "s":
                 Sys.println("Setup started!");
                 setup();
-            case "build":
+            case "build" | "b":
                 build();
             default:
                 Sys.println("Unknown command: " + args[0]);
@@ -42,8 +42,10 @@ class Build
             Sys.exit(1);
         }
         var filePath = haxePath + '/extended-flixel.cmd';
+        var filePath2 = haxePath + '/ef.cmd';
 
         File.saveContent(filePath, cmdContent);
+        File.saveContent(filePath2, cmdContent);
 
         log("Done.");
     }
