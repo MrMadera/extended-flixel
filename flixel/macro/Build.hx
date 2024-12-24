@@ -25,6 +25,8 @@ class Build
                 setup();
             case "build" | "b":
                 build();
+            case "test" | "t":
+                test();
             default:
                 Sys.println("Unknown command: " + args[0]);
         }    
@@ -95,6 +97,51 @@ class Build
 
                 calculateBuildTime();
             }
+        }
+        else
+        {
+            log("Invalid OS. Aborting...");
+            Sys.exit(1);
+        }
+    }
+
+    static function test()
+    {
+        log(warningText);
+        log("");
+        log("You're gonna execute a custom test process which is right now in BETA.");
+        log("");
+        Sys.print("Which OS are you building? [you can ONLY write one] (windows/mac/linux) ");
+        var osHelper = Sys.stdin().readLine();
+        if(["w", "windows", "m", "mac", "l", "linux"].contains(osHelper))
+        {
+            // custom flags
+            var customFlags:String = "";
+
+            log("");
+            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
+            var flagHelpder = Sys.stdin().readLine();
+            if(flagHelpder.toLowerCase().trim() != "")
+            {
+                customFlags = flagHelpder;
+            }
+
+            // starting compilation
+            var osName:String = osHelper;
+
+            if(osName == 'windows' || osName == 'w') osName = "Windows";
+            else if(osName == 'mac' || osName == 'm') osName = "Mac";
+            else if(osName == 'linux' || osName == 'l') osName = "Linux";
+
+            log("Building for " + osName + "...");
+            Sys.sleep(0.4);
+    
+            var curDirectory = Sys.args().copy().pop();
+            Sys.setCwd(curDirectory);
+            
+            if(osHelper == 'windows' || osHelper == 'w') Sys.command("lime test windows " + customFlags);
+            else if(osHelper == 'mac' || osHelper == 'm') Sys.command("lime test mac " + customFlags);
+            else if(osHelper == 'linux' || osHelper == 'l') Sys.command("lime test linux " + customFlags);
         }
         else
         {
