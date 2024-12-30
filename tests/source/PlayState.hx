@@ -4,6 +4,7 @@ import flixel.net.InternetCheck;
 import flixel.text.FlxText;
 import flixel.extended.ExtendedSprite;
 import flixel.extended.ExtendedText;
+import flixel.particles.ParticleSystem;
 import flixel.FlxState;
 
 import flixel.net.downloads.GoogleDriveDownloader;
@@ -11,6 +12,8 @@ import flixel.net.downloads.GoogleDriveDownloader;
 class PlayState extends FlxState
 {
 	var sprite:ExtendedSprite;
+	var particles:ParticleSystem;
+
 	override public function create()
 	{
 		super.create();
@@ -54,6 +57,11 @@ class PlayState extends FlxState
 			}
 			//new GoogleDriveDownloader("https://drive.google.com/file/d/1aoQrga81pQQBM0zgKp8EhcEhn2iyDh7g/view?usp=sharing", "test_file");
 		});
+
+		particles = new ParticleSystem(0, 0);
+		particles.particlesNum = 2;
+		particles.generateParticles('assets/images/demoParticle.png');
+		add(particles);
 	}
 
 	override public function update(elapsed:Float)
