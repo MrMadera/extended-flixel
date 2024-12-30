@@ -22,7 +22,7 @@ class PlayState extends FlxState
 		sprite.addSparrowAnimation('idle', 'BF idle dance', 24, true);
 		sprite.playAnim('idle');
 		sprite.screenCenter();
-		sprite.shakeObject(3, 2);
+		sprite.shakeObject(0.05, 2, XY);
 		sprite.doTween({alpha: 0}, 2, {type: PINGPONG});
 		add(sprite);
 

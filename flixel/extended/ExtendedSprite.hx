@@ -5,6 +5,7 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxAxes;
 
 class ExtendedSprite extends FlxSprite
 {
@@ -65,20 +66,9 @@ class ExtendedSprite extends FlxSprite
         animation.play(name, false, false, frame);
     }
 
-    public function shakeObject(intensity:Float, time:Float)
+    public function shakeObject(intensity:Float, time:Float, axes:FlxAxes)
     {
-        var ogX:Float = x;
-        var ogY:Float = y;
-
-        var endTime = elapsedTime + time;
-
-        sys.thread.Thread.create(() -> {
-            while(elapsedTime < endTime)
-            {
-                #if debug trace('shake time: $elapsedTime/$endTime'); #end
-                setPosition(ogX + FlxG.random.float(-intensity, intensity), ogY + FlxG.random.float(-intensity, intensity));
-            }
-        });
+        FlxTween.shake(this, intensity, time, axes);
     }
 
     public function isOverlaping(pixelPerfect:Bool, getLastCamera:Bool)
