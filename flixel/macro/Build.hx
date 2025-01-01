@@ -138,10 +138,33 @@ class Build
     
             var curDirectory = Sys.args().copy().pop();
             Sys.setCwd(curDirectory);
+
+            createBuildFile();
             
-            if(osHelper == 'windows' || osHelper == 'w') Sys.command("lime test windows " + customFlags);
-            else if(osHelper == 'mac' || osHelper == 'm') Sys.command("lime test mac " + customFlags);
-            else if(osHelper == 'linux' || osHelper == 'l') Sys.command("lime test linux " + customFlags);
+            if(osHelper == 'windows' || osHelper == 'w')
+            {
+                Sys.command("lime update windows " + customFlags);
+                Sys.command("lime build windows " + customFlags);
+                calculateBuildTime();
+                Sys.command("lime install windows " + customFlags);
+                Sys.command("lime run windows " + customFlags);
+            }
+            else if(osHelper == 'mac' || osHelper == 'm') 
+            {
+                Sys.command("lime update mac " + customFlags);
+                Sys.command("lime build mac " + customFlags);
+                calculateBuildTime();
+                Sys.command("lime install mac " + customFlags);
+                Sys.command("lime run mac " + customFlags);
+            }
+            else if(osHelper == 'linux' || osHelper == 'l') 
+            {
+                Sys.command("lime update linux " + customFlags);
+                Sys.command("lime build linux " + customFlags);
+                calculateBuildTime();
+                Sys.command("lime install linux " + customFlags);
+                Sys.command("lime run linux " + customFlags);
+            }
         }
         else
         {
