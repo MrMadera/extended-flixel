@@ -91,11 +91,27 @@ class Build
 
                 createBuildFile();
                 
-                if(os == 'windows' || os == 'w') Sys.command("lime build windows " + customFlags);
-                else if(os == 'mac' || os == 'm') Sys.command("lime build mac " + customFlags);
-                else if(os == 'linux' || os == 'l') Sys.command("lime build linux " + customFlags);
-
-                calculateBuildTime();
+            if(osHelper == 'windows' || osHelper == 'w')
+                {
+                    Sys.command("lime update windows -verbose" + customFlags);
+                    Sys.command("lime build windows " + customFlags);
+                    calculateBuildTime();
+                    Sys.command("lime install windows " + customFlags);
+                }
+                else if(osHelper == 'mac' || osHelper == 'm') 
+                {
+                    Sys.command("lime update mac " + customFlags);
+                    Sys.command("lime build mac " + customFlags);
+                    calculateBuildTime();
+                    Sys.command("lime install mac " + customFlags);
+                }
+                else if(osHelper == 'linux' || osHelper == 'l') 
+                {
+                    Sys.command("lime update linux " + customFlags);
+                    Sys.command("lime build linux " + customFlags);
+                    calculateBuildTime();
+                    Sys.command("lime install linux " + customFlags);
+                }
             }
         }
         else
