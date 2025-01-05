@@ -143,7 +143,7 @@ class Build
             
             if(osHelper == 'windows' || osHelper == 'w')
             {
-                Sys.command("lime update windows " + customFlags);
+                Sys.command("lime update windows -verbose" + customFlags);
                 Sys.command("lime build windows " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime install windows " + customFlags);
