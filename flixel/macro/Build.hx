@@ -76,7 +76,7 @@ class Build
             var arrayOfOs = osHelper.split(",");
             for(os in arrayOfOs)
             {
-                var osName:String = "";
+                osName = "";
                 if(os == 'windows' || os == 'w') osName = "Windows";
                 else if(os == 'mac' || os == 'm') osName = "Mac";
                 else if(os == 'linux' || os == 'l') osName = "Linux";
@@ -137,7 +137,7 @@ class Build
             }
 
             // starting compilation
-            var osName:String = osHelper;
+            osName = osHelper;
 
             if(osName == 'windows' || osName == 'w') osName = "Windows";
             else if(osName == 'mac' || osName == 'm') osName = "Mac";
@@ -228,7 +228,16 @@ class Build
         if (FileSystem.exists(buildFileLocation)) {
             try
             {
-                FileSystem.deleteFile(buildFileLocation);
+                //FileSystem.deleteFile(buildFileLocation);
+                switch(osName)
+                {
+                    case 'Windows':
+                        Sys.command('del "$buildFileLocation"');
+                    case 'Mac' | 'Linux':
+                        Sys.command('rm "$buildFileLocation"');
+                    default:
+                        log('IDKKKKKK');
+                }
                 if(isVerboseMode || isDebugMode) log('BUILD FILE DELETED SUCCESSFULLY!', AFIRMATIVE);
             }
             catch(exc)
@@ -313,6 +322,7 @@ class Build
     static var isVerboseMode:Bool = false;
     static var isDebugMode:Bool = false;
     static var customFlags:String = ""; //global variable
+    static var osName:String = "";
 }
 
 enum LineType
