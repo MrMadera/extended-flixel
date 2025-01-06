@@ -64,9 +64,6 @@ class Build
         var array = osHelper.split(",");
         if(["w", "windows", "m", "mac", "l", "linux"].contains(array[0]))
         {
-            // custom flags
-            var customFlags:String = "";
-
             log("");
             Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
             var flagHelpder = Sys.stdin().readLine();
@@ -132,9 +129,6 @@ class Build
         var osHelper = Sys.stdin().readLine();
         if(["w", "windows", "m", "mac", "l", "linux"].contains(osHelper))
         {
-            // custom flags
-            var customFlags:String = "";
-
             log("");
             Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
             var flagHelpder = Sys.stdin().readLine();
@@ -204,36 +198,47 @@ class Build
         File.append(buildFileLocation, false);
         File.saveContent(buildFileLocation, content);
         log('BUILD FILE CREATED!', AFIRMATIVE);
+
+        // IMPORTANT DATA (using in this function cuz is used in both functions)
+        if(customFlags.contains("-verbose"))
+        {
+            isVerboseMode = true;
+        }
+
+        if(customFlags.contains("-debug"))
+        {
+            isDebugMode = true;
+        }
     }
 
     static function calculateBuildTime()
     {
         var dateWhenBuildStarted = Date.fromString(File.getContent(buildFileLocation));
-        log('The file was created in $dateWhenBuildStarted');
+        if(isVerboseMode || isDebugMode) log('The file was created in $dateWhenBuildStarted');
 
         var currentDate = Date.now();
-        log('The current time is $currentDate');
+        if(isVerboseMode || isDebugMode) log('The current time is $currentDate');
 
         var difference = currentDate.getTime() - dateWhenBuildStarted.getTime();
-        log('The difference (in milliseconds) is ${currentDate.getTime()} - ${dateWhenBuildStarted.getTime()} = $difference');
+        if(isVerboseMode || isDebugMode) log('The difference (in milliseconds) is ${currentDate.getTime()} - ${dateWhenBuildStarted.getTime()} = $difference');
 
         var seconds = difference / 1000;
-        log('Dividing by 1000 we get $seconds');
-        log(ConsoleUtils.yellow + 'Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)');
+        if(isVerboseMode || isDebugMode) log('Dividing by 1000 we get $seconds');
+        log(ConsoleUtils.yellow + 'Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)' + ConsoleUtils.reset);
 
         Sys.sleep(0.5);
         if (FileSystem.exists(buildFileLocation)) {
             try
             {
                 FileSystem.deleteFile(buildFileLocation);
-                log('BUILD FILE DELETED SUCCESSFULLY!', AFIRMATIVE);
+                if(isVerboseMode || isDebugMode) log('BUILD FILE DELETED SUCCESSFULLY!', AFIRMATIVE);
             }
             catch(exc)
             {
-                log('WARNING: Build file cannot be deleted.', ERROR, true);
+                if(isVerboseMode || isDebugMode) log('WARNING: Build file cannot be deleted.', ERROR, true);
             }
         } else {
-            log('WARNING: Build file not found. Nothing to delete.', ERROR, true);
+            if(isVerboseMode || isDebugMode) log('WARNING: Build file not found. Nothing to delete.', ERROR, true);
         }
     }
 
@@ -302,6 +307,9 @@ class Build
     
     static var warningText:String = File.getContent('assets/data/warning.txt');
     static var buildFileLocation:String = 'temp/build_time.BUILD';
+    static var isVerboseMode:Bool = false;
+    static var isDebugMode:Bool = false;
+    static var customFlags:String = ""; //global variable
 }
 
 enum LineType
