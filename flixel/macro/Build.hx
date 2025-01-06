@@ -88,27 +88,26 @@ class Build
                 Sys.setCwd(curDirectory);
 
                 createBuildFile();
+
+                if(customFlags.contains("-reinstall")) reinstallLibraries();
                 
-            if(osHelper == 'windows' || osHelper == 'w')
+                if(osHelper == 'windows' || osHelper == 'w')
                 {
                     Sys.command("lime update windows -verbose" + customFlags);
                     Sys.command("lime build windows " + customFlags);
                     calculateBuildTime();
-                    Sys.command("lime install windows " + customFlags);
                 }
                 else if(osHelper == 'mac' || osHelper == 'm') 
                 {
                     Sys.command("lime update mac " + customFlags);
                     Sys.command("lime build mac " + customFlags);
                     calculateBuildTime();
-                    Sys.command("lime install mac " + customFlags);
                 }
                 else if(osHelper == 'linux' || osHelper == 'l') 
                 {
                     Sys.command("lime update linux " + customFlags);
                     Sys.command("lime build linux " + customFlags);
                     calculateBuildTime();
-                    Sys.command("lime install linux " + customFlags);
                 }
             }
         }
@@ -151,13 +150,14 @@ class Build
             Sys.setCwd(curDirectory);
 
             createBuildFile();
+
+            if(customFlags.contains("-reinstall")) reinstallLibraries();
             
             if(osHelper == 'windows' || osHelper == 'w')
             {
                 Sys.command("lime update windows -verbose" + customFlags);
                 Sys.command("lime build windows " + customFlags);
                 calculateBuildTime();
-                Sys.command("lime install windows " + customFlags);
                 Sys.command("lime run windows " + customFlags);
             }
             else if(osHelper == 'mac' || osHelper == 'm') 
@@ -165,7 +165,6 @@ class Build
                 Sys.command("lime update mac " + customFlags);
                 Sys.command("lime build mac " + customFlags);
                 calculateBuildTime();
-                Sys.command("lime install mac " + customFlags);
                 Sys.command("lime run mac " + customFlags);
             }
             else if(osHelper == 'linux' || osHelper == 'l') 
@@ -173,7 +172,6 @@ class Build
                 Sys.command("lime update linux " + customFlags);
                 Sys.command("lime build linux " + customFlags);
                 calculateBuildTime();
-                Sys.command("lime install linux " + customFlags);
                 Sys.command("lime run linux " + customFlags);
             }
         }
@@ -240,6 +238,11 @@ class Build
         } else {
             if(isVerboseMode || isDebugMode) log('WARNING: Build file not found. Nothing to delete.', ERROR, true);
         }
+    }
+
+    static function reinstallLibraries()
+    {
+        Sys.command("hmm reinstall -f");
     }
 
     public static function log(?log:String = "", lineType:LineType = NORMAL, bold:Bool = false, underline:Bool = false) 
