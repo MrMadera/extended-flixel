@@ -93,19 +93,19 @@ class Build
                 
                 if(osHelper == 'windows' || osHelper == 'w')
                 {
-                    Sys.command("lime update windows -verbose" + customFlags);
+                    Sys.command("lime update windows -verbose " + customFlags);
                     Sys.command("lime build windows " + customFlags);
                     calculateBuildTime();
                 }
                 else if(osHelper == 'mac' || osHelper == 'm') 
                 {
-                    Sys.command("lime update mac " + customFlags);
+                    Sys.command("lime update mac -verbose " + customFlags);
                     Sys.command("lime build mac " + customFlags);
                     calculateBuildTime();
                 }
                 else if(osHelper == 'linux' || osHelper == 'l') 
                 {
-                    Sys.command("lime update linux " + customFlags);
+                    Sys.command("lime update linux -verbose " + customFlags);
                     Sys.command("lime build linux " + customFlags);
                     calculateBuildTime();
                 }
@@ -155,21 +155,21 @@ class Build
             
             if(osHelper == 'windows' || osHelper == 'w')
             {
-                Sys.command("lime update windows -verbose" + customFlags);
+                Sys.command("lime update windows -verbose " + customFlags);
                 Sys.command("lime build windows " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime run windows " + customFlags);
             }
             else if(osHelper == 'mac' || osHelper == 'm') 
             {
-                Sys.command("lime update mac " + customFlags);
+                Sys.command("lime update mac -verbose " + customFlags);
                 Sys.command("lime build mac " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime run mac " + customFlags);
             }
             else if(osHelper == 'linux' || osHelper == 'l') 
             {
-                Sys.command("lime update linux " + customFlags);
+                Sys.command("lime update linux -verbose " + customFlags);
                 Sys.command("lime build linux " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime run linux " + customFlags);
