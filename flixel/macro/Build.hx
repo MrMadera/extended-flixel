@@ -1,5 +1,6 @@
 package flixel.macro;
 
+import haxe.io.Path;
 import console.ConsoleUtils;
 import sys.FileSystem;
 import sys.io.Process;
@@ -227,18 +228,23 @@ class Build
         Sys.sleep(0.5);
         if (FileSystem.exists(buildFileLocation)) {
             try
-            {
+            {   /*
+                var cwd = Sys.getCwd();
+                cwd = Path.normalize(cwd);
+                log("CWDDDDDDDD " + cwd);
                 //FileSystem.deleteFile(buildFileLocation);
                 switch(osName)
                 {
                     case 'Windows':
-                        Sys.command('del "$buildFileLocation"');
+                        Sys.command('del "$cwd/$buildFileLocation"');
                     case 'Mac' | 'Linux':
                         Sys.command('rm "$buildFileLocation"');
                     default:
                         log('IDKKKKKK');
                 }
                 if(isVerboseMode || isDebugMode) log('BUILD FILE DELETED SUCCESSFULLY!', AFIRMATIVE);
+                */
+                if(isVerboseMode || isDebugMode) log(ConsoleUtils.yellow + ConsoleUtils.bold + 'WARNING:' + ConsoleUtils.reset + ' Build file cannot be deleted.', NORMAL);
             }
             catch(exc)
             {
