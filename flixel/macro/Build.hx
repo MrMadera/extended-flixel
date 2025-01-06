@@ -1,5 +1,6 @@
 package flixel.macro;
 
+import console.ConsoleUtils;
 import sys.FileSystem;
 import sys.io.Process;
 import sys.io.File;
@@ -232,21 +233,70 @@ class Build
             }
             catch(exc)
             {
-                log(red + 'WARNING: Build file cannot be deleted.' + reset);
+                log('WARNING: Build file cannot be deleted.', ERROR, true);
             }
         } else {
             log('WARNING: Build file not found. Nothing to delete.');
         }
     }
 
-    public static function log(?log:String = "") {
+    public static function log(?log:String = "", lineType:LineType = NORMAL, bold:Bool = false, underline:Bool = false) 
+    {
         #if sys
-        Sys.println(log);
+            switch(lineType)
+            {
+                case ERROR:
+                    if(bold)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.bold + prevLog;
+                    }
+                    if(underline)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.underline + prevLog;
+                    }
+                    
+                    Sys.println(ConsoleUtils.red + log + ConsoleUtils.reset);
+                case WARNING:
+                    if(bold)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.bold + prevLog;
+                    }
+                    if(underline)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.underline + prevLog;
+                    }
+
+                    Sys.println(ConsoleUtils.yellow + log + ConsoleUtils.reset);
+                default:
+                    if(bold)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.bold + prevLog;
+                    }
+                    if(underline)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.underline + prevLog;
+                    }
+
+                    Sys.println(log);
+            }
         #else
-        trace('\n' + log);
+            trace('\n' + log);
         #end
     }
     
     static var warningText:String = File.getContent('assets/data/warning.txt');
     static var buildFileLocation:String = 'temp/build_time.BUILD';
+}
+
+enum LineType
+{
+    ERROR;
+    WARNING;
+    NORMAL;
 }
