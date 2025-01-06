@@ -197,20 +197,17 @@ class Build
         // creates a directory in case it's null
         if(!FileSystem.exists("temp/")) 
         {
-            log("creating TEMPORAL folder!!");
+            log("Creating TEMPORAL folder!!", AFIRMATIVE);
             FileSystem.createDirectory("temp");
         }
 
         File.append(buildFileLocation, false);
         File.saveContent(buildFileLocation, content);
-        log('BUILD FILE CREATED!');
+        log('BUILD FILE CREATED!', AFIRMATIVE);
     }
 
     static function calculateBuildTime()
     {
-        var red = "\033[31m";
-        var reset = "\033[0m";
-        
         var dateWhenBuildStarted = Date.fromString(File.getContent(buildFileLocation));
         log('The file was created in $dateWhenBuildStarted');
 
@@ -222,21 +219,21 @@ class Build
 
         var seconds = difference / 1000;
         log('Dividing by 1000 we get $seconds');
-        log('Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)');
+        log(ConsoleUtils.yellow + 'Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)');
 
         Sys.sleep(0.5);
         if (FileSystem.exists(buildFileLocation)) {
             try
             {
                 FileSystem.deleteFile(buildFileLocation);
-                log('BUILD FILE DELETED SUCCESSFULLY!');
+                log('BUILD FILE DELETED SUCCESSFULLY!', AFIRMATIVE);
             }
             catch(exc)
             {
                 log('WARNING: Build file cannot be deleted.', ERROR, true);
             }
         } else {
-            log('WARNING: Build file not found. Nothing to delete.');
+            log('WARNING: Build file not found. Nothing to delete.', ERROR, true);
         }
     }
 
@@ -271,6 +268,19 @@ class Build
                     }
 
                     Sys.println(ConsoleUtils.yellow + log + ConsoleUtils.reset);
+                case AFIRMATIVE:
+                    if(bold)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.bold + prevLog;
+                    }
+                    if(underline)
+                    {
+                        var prevLog = log;
+                        log = ConsoleUtils.underline + prevLog;
+                    }
+
+                    Sys.println(ConsoleUtils.green + log + ConsoleUtils.reset);
                 default:
                     if(bold)
                     {
@@ -298,5 +308,6 @@ enum LineType
 {
     ERROR;
     WARNING;
+    AFIRMATIVE;
     NORMAL;
 }
