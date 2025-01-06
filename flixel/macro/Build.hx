@@ -192,14 +192,25 @@ class Build
     static function createBuildFile()
     {
         var content:String = Date.now().toString();
-        File.append("build_time.BUILD", false);
-        File.saveContent("build_time.BUILD", content);
+
+        // creates a directory in case it's null
+        if(!FileSystem.exists("temp/")) 
+        {
+            log("creating TEMPORAL folder!!");
+            FileSystem.createDirectory("temp");
+        }
+
+        File.append(buildFileLocation, false);
+        File.saveContent(buildFileLocation, content);
         log('BUILD FILE CREATED!');
     }
 
     static function calculateBuildTime()
     {
-        var dateWhenBuildStarted = Date.fromString(File.getContent("build_time.BUILD"));
+        var red = "\033[31m";
+        var reset = "\033[0m";
+        
+        var dateWhenBuildStarted = Date.fromString(File.getContent(buildFileLocation));
         log('The file was created in $dateWhenBuildStarted');
 
         var currentDate = Date.now();
@@ -212,8 +223,20 @@ class Build
         log('Dividing by 1000 we get $seconds');
         log('Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)');
 
-        //FileSystem.deleteFile("build_time.BUILD");
-        //log('BUILD FILE DELETED!');
+        Sys.sleep(0.5);
+        if (FileSystem.exists(buildFileLocation)) {
+            try
+            {
+                FileSystem.deleteFile(buildFileLocation);
+                log('BUILD FILE DELETED SUCCESSFULLY!');
+            }
+            catch(exc)
+            {
+                log(red + 'WARNING: Build file cannot be deleted.' + reset);
+            }
+        } else {
+            log('WARNING: Build file not found. Nothing to delete.');
+        }
     }
 
     public static function log(?log:String = "") {
@@ -225,4 +248,5 @@ class Build
     }
     
     static var warningText:String = File.getContent('assets/data/warning.txt');
+    static var buildFileLocation:String = 'temp/build_time.BUILD';
 }
