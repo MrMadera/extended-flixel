@@ -20,9 +20,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
- package haxe.zip;
+ package flixel.zip;
 
  import haxe.zip.Entry;
+ import haxe.zip.InflateImpl;
  import haxe.ds.List;
 
  // Original code as shown in the beggining by HaxeFoundation. Some modifications by me
@@ -124,6 +125,7 @@
          var l = new List();
          var buf = null;
          var tmp = null;
+         Sys.println('      Starting process');
          while (true) {
              var e = readEntryHeader();
              if (e == null)
@@ -189,11 +191,14 @@
              } else
                  e.data = i.read(e.dataSize);
              l.add(e);
+             #if debug Sys.println('      Reading entry: ' + e.fileName); #end
          }
+         Sys.println('      Ending process');
          return l;
      }
  
      public static function readZip(i:haxe.io.Input) {
+        Sys.println('      Starting static process');
          var r = new Reader(i);
          return r.read();
      }
