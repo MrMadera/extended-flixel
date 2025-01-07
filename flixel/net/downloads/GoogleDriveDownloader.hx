@@ -12,7 +12,7 @@ import htmlparser.HtmlDocument;
 import haxe.zip.Uncompress;
 import sys.io.FileOutput;
 import sys.FileSystem;
-import haxe.zip.Reader;
+import flixel.zip.Reader;
 import haxe.zip.Entry;
 
 // Direct link:
