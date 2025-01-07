@@ -9,8 +9,6 @@ import flixel.util.FlxAxes;
 
 class ExtendedSprite extends FlxSprite
 {
-    // TODO: Add descriptions to everything
-
     /**
      * The graphic path is where the graphics is located in the `assets` folder
     **/
