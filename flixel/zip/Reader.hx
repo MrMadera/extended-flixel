@@ -31,6 +31,8 @@
  // see http://www.pkware.com/documents/casestudies/APPNOTE.TXT
  class Reader {
      var i:haxe.io.Input;
+
+     public static var readFiles:String = "";
  
      public function new(i) {
          this.i = i;
@@ -192,8 +194,10 @@
                  e.data = i.read(e.dataSize);
              l.add(e);
              #if debug Sys.println('      Reading entry: ' + e.fileName); #end
+             readFiles = e.fileName;
          }
          Sys.println('      Ending process');
+         readFiles = "";
          return l;
      }
  
