@@ -34,6 +34,6 @@ jobs:
           - name: Upload artifact
             uses: actions/upload-artifact@v3
             with:
-              path: tests/export/release/windows/bin
+              path: tests/export/windows/bin
               name: windowsBuild
               retention-days: 1
