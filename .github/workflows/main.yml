@@ -30,3 +30,10 @@ jobs:
           - name: Compile
             run: cmd /c "cd tests & haxelib run lime build windows --app-version="4.0.0-${{ github.run_id }}"
             shell: cmd
+
+          - name: Upload artifact
+            uses: actions/upload-artifact@v3
+            with:
+              path: export/release/windows/bin
+              name: windowsBuild
+              retention-days: 1
