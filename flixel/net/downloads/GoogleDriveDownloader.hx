@@ -238,10 +238,32 @@ class GoogleDriveDownloader
 				break;
 			}
 			var splitHeader = read.split(": ");
-            headers.set(splitHeader[0].toLowerCase(), splitHeader[1]);
-            trace('Headers map: ' + headers);
+            if (splitHeader.length >= 2) 
+            {
+                var headerName = splitHeader[0].toLowerCase();
+                var headerValue = splitHeader.slice(1).join(": ");
+                
+                // Look for Content-Disposition
+                if (headerName == "content-disposition") 
+                {
+                    var filenameMatch = ~/filename="?([^"]+)"?/;
+                    if (filenameMatch.match(headerValue)) 
+                    {
+                        var filename = filenameMatch.matched(1);
+                        var parts = filename.split(".");
+                        if (parts.length > 1) 
+                        {
+                            extension = parts[parts.length - 1];
+                            trace('Found extension: $extension');
+                        }
+                    }
+                }
+                headers.set(headerName, headerValue);
+            }
 
             #if debug
+                trace('Headers map: ' + headers);
+
                 var oldoutputFilePath:String = Sys.programPath();
                 var index = oldoutputFilePath.lastIndexOf("\\");
                 var defaultOutputPathDebug:String = oldoutputFilePath.substr(0, index);

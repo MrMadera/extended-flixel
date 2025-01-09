@@ -40,7 +40,6 @@ class PlayState extends FlxState
 			txt.setAlignment('left');
 			add(txt);
 
-			GoogleDriveDownloader.extension = 'zip';
 			GoogleDriveDownloader.autoUnzip = true;
 			//GoogleDriveDownloader.customOutputPath = 'C:/Users/User/Desktop';
 			GoogleDriveDownloader.onSuccess = function()
