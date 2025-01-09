@@ -21,10 +21,9 @@ jobs:
             run: |
               haxelib setup C:/haxelib
               haxelib install hxcpp --quiet
-              haxelib --global install hmm
-              haxelib --global run hmm setup 
-              hmm install
+              haxe -cp ./setup -D analyzer-optimize -main Main --interp
             shell: cmd
+
           - name: Skip SScript setup mode
             run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
 
