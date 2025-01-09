@@ -13,26 +13,19 @@ new GoogleDriveDownloader('https://docs.google.com/document/d/1PbiTneQ-HJFpDc6EQ
 ```
 
 After that you must include the extension of the file 
-> WARNING: If you do not include the extension, the output file will be a normal file!
-
-```haxe
-GoogleDriveDownloader.extension = 'zip'; //my_download.zip
-new GoogleDriveDownloader('https://docs.google.com/document/d/1PbiTneQ-HJFpDc6EQ8LxcsjFz3UNv3C1OElg6sdUaT4/edit?usp=sharing', 'my_download');
-```
+> **WARNING:** If you're using older versions, include the extension, if you don't , the output file will recognize the extension automaticlly!
 
 ### EXTRA
 If you're downloading a .zip file, you can automatically unzip the file
 > This process depending on the zip content, may take a few minutes
 
 ```haxe
-GoogleDriveDownloader.extension = 'zip';
 GoogleDriveDownloader.autoUnzip = true; // this will unzip your file when the download is finished
 new GoogleDriveDownloader('https://docs.google.com/document/d/1PbiTneQ-HJFpDc6EQ8LxcsjFz3UNv3C1OElg6sdUaT4/edit?usp=sharing', 'my_download');
 ```
 
 You can also set a custom path for the download
 ```haxe
-GoogleDriveDownloader.extension = 'zip';
 GoogleDriveDownloader.autoUnzip = true;
 GoogleDriveDownloader.customOutputPath = 'C:/Users/User/Desktop'; // the output file will be located in the desktop
 new GoogleDriveDownloader('https://docs.google.com/document/d/1PbiTneQ-HJFpDc6EQ8LxcsjFz3UNv3C1OElg6sdUaT4/edit?usp=sharing', 'my_download');
