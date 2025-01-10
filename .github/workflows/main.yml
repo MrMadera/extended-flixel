@@ -38,7 +38,10 @@ jobs:
               echo BEFORE INSTALLING!!!
               haxelib list
               haxelib install hxcpp --quiet
-              haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              haxelib install lime 8.2.0 --quiet
+              haxelib install openfl 9.3.4 --quiet
+              haxelib install flixel --quiet
+              haxelib git extended-flixel https://github.com/MrMadera/extended-flixel --quiet
               echo AFTER INSTALLING!!!
               haxelib list
             shell: cmd
