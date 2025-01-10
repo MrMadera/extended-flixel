@@ -92,19 +92,19 @@ class Build
 
                 if(customFlags.contains("-reinstall")) reinstallLibraries();
                 
-                if(osHelper == 'windows' || osHelper == 'w')
+                if(os == 'windows' || os == 'w')
                 {
                     Sys.command("lime update windows -verbose " + customFlags);
                     Sys.command("lime build windows " + customFlags);
                     calculateBuildTime();
                 }
-                else if(osHelper == 'mac' || osHelper == 'm') 
+                else if(os == 'mac' || os == 'm') 
                 {
                     Sys.command("lime update mac -verbose " + customFlags);
                     Sys.command("lime build mac " + customFlags);
                     calculateBuildTime();
                 }
-                else if(osHelper == 'linux' || osHelper == 'l') 
+                else if(os == 'linux' || os == 'l') 
                 {
                     Sys.command("lime update linux -verbose " + customFlags);
                     Sys.command("lime build linux " + customFlags);
