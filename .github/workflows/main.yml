@@ -71,13 +71,13 @@ jobs:
           - name: Compile
             run: |
               cd tests 
-              haxelib run lime build mac -cpp -verbose --app-version="4.0.0-${{ github.run_id }}"
+              haxelib run lime build mac -cpp --app-version="4.0.0-${{ github.run_id }}"
             shell: bash
 
           - name: Upload artifact
             uses: actions/upload-artifact@v4
             with:
-              path: tests/export/neko/bin
+              path: tests/export/macos/bin
               name: macBuild
               retention-days: 1
 
