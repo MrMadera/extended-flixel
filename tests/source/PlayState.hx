@@ -40,6 +40,7 @@ class PlayState extends FlxState
 			txt.setAlignment('left');
 			add(txt);
 
+			#if sys
 			GoogleDriveDownloader.autoUnzip = true;
 			//GoogleDriveDownloader.customOutputPath = 'C:/Users/User/Desktop';
 			GoogleDriveDownloader.onSuccess = function()
@@ -55,6 +56,7 @@ class PlayState extends FlxState
 			    trace('Unzip process completed!');
 			}
 			new GoogleDriveDownloader("https://drive.google.com/file/d/1aoQrga81pQQBM0zgKp8EhcEhn2iyDh7g/view?usp=sharing", "test_file");
+			#end
 		});
 
 		particles = new ParticleSystem(0, 0);

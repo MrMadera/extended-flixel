@@ -26,7 +26,9 @@ class InternetCheck
             callback(false);
         };
         http.request(false);
+        #if sys
         Sys.sleep(2);
+        #end
     }
 
     public static function executeCurl(callback:Bool->Void) 
