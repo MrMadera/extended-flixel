@@ -31,10 +31,11 @@ jobs:
               haxelib list
               haxelib install hxcpp --quiet
               haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              haxelib list
             shell: cmd
 
           - name: Update Cache
-            if: always() # Update the cache regardless of workflow success/failure
+            if: always()
             uses: actions/cache@v4
             with:
               path: C:/haxelib
