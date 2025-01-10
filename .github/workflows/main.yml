@@ -17,23 +17,30 @@ jobs:
             with:
               haxe-version: 4.3.6
 
+          - name: Setup Haxelib Directory
+            run: |
+              mkdir C:/haxelib
+              haxelib setup C:/haxelib
+            shell: cmd
+
           - name: Cache Haxelib dependencies
             uses: actions/cache@v4
             with:
-              path: C:/haxelib
-              key: ${{ runner.os }}-haxelib-${{ github.run_id }} # Unique for each workflow run
+              path: |
+                C:/haxelib
+                %HOMEDRIVE%%HOMEPATH%/.haxe
+              key: ${{ runner.os }}-haxelib-${{ hashFiles('**/setup/Main.hx', '**/Project.xml', '**/project.xml') }}
               restore-keys: |
                 ${{ runner.os }}-haxelib-
 
-          - name: Install Haxelib
+          - name: Install Haxelib Dependencies
             run: |
-              haxelib setup C:/haxelib
               echo BEFORE INSTALLING!!!
               haxelib list
               haxelib install hxcpp --quiet
               haxelib install lime 8.2.0 --quiet
-              haxelib --global install hmm
-              haxelib run hmm install --quiet 
+              haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              echo AFTER INSTALLING!!!
               haxelib list
             shell: cmd
 
