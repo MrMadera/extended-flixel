@@ -21,7 +21,7 @@ jobs:
             uses: actions/cache@v4
             with:
               path: C:/haxelib
-              key: ${{ runner.os }}-haxelib-${{ hashFiles('**/setup/Main.hx') }}
+              key: ${{ runner.os }}-haxelib-${{ github.run_id }} # Unique for each workflow run
               restore-keys: |
                 ${{ runner.os }}-haxelib-
 
@@ -32,6 +32,13 @@ jobs:
               haxelib install hxcpp --quiet
               haxe -cp ./setup -D analyzer-optimize -main Main --interp
             shell: cmd
+
+          - name: Update Cache
+            if: always() # Update the cache regardless of workflow success/failure
+            uses: actions/cache@v4
+            with:
+              path: C:/haxelib
+              key: ${{ runner.os }}-haxelib-${{ github.run_id }}
 
           - name: Create Version Tag
             run: echo "${{ github.run_id }}" > VERSION
