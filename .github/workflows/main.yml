@@ -55,7 +55,7 @@ jobs:
 
           - name: Setup Haxelib Directory
             run: |
-              haxelib setup C:/haxelib
+              haxelib setup ~/haxelib
             shell: bash
 
           - name: Install Haxelib Dependencies
@@ -96,7 +96,7 @@ jobs:
 
         - name: Setup Haxelib Directory
           run: |
-            haxelib setup C:/haxelib
+            haxelib setup ~/haxelib
           shell: bash
 
         - name: Install Haxelib Dependencies
