@@ -78,6 +78,12 @@
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	
+	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
+	<haxedef name='no-deprecation-warnings' />
+
+	<haxeflag name="--macro" value="allowPackage('flash')" />
+	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
