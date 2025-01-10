@@ -1,5 +1,6 @@
 package flixel.net.downloads;
 
+#if sys
 import flixel.math.FlxMath;
 import haxe.io.Eof;
 import haxe.io.Error;
@@ -14,6 +15,7 @@ import sys.io.FileOutput;
 import sys.FileSystem;
 import flixel.zip.Reader;
 import haxe.zip.Entry;
+#end
 
 // Direct link:
 //https://download1326.mediafire.com/bxesialfjqvgNZFE0xL0GqPEisM1mE5dhDS1-zzNhDem5gRYS_H9SAAX31svImmMS161gRg8tZTDOfUiJFrte7q-S-giRrOMrPDOmpLco7VLv0xkmqcKmRO19P_rKHuRWCtpz-on0nBbXkduIvc5t97pp55rqQGFEwNm-mT8J08/teq6fgks0mzhnm4/bin.zip
