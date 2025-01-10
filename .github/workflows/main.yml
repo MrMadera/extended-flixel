@@ -101,9 +101,13 @@ jobs:
 
         - name: Install Haxelib Dependencies
           run: |
+            sudo apt-get install libvlc-dev
+            sudo apt-get install libvlccore-dev
             haxelib install hxcpp --quiet
             haxe -cp ./setup -D analyzer-optimize -main Main --interp
             haxelib list
+            chmod +x ./setup/unix.sh
+            sh ./setup/unix.sh
           shell: bash
 
         - name: Create Version Tag
