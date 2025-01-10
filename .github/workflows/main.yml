@@ -33,8 +33,7 @@ jobs:
               haxelib install hxcpp --quiet
               haxelib install lime 8.2.0 --quiet
               haxelib --global install hmm
-              haxelib --global run hmm setup
-              haxelib --global run hmm install --quiet 
+              haxelib run hmm install --quiet 
               haxelib list
             shell: cmd
 
