@@ -30,6 +30,7 @@ jobs:
               haxelib setup C:/haxelib
               haxelib list
               haxelib install hxcpp --quiet
+              haxelib install lime 8.2.0 --quiet
               haxe -cp ./setup -D analyzer-optimize -main Main --interp
               haxelib list
             shell: cmd
