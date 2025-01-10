@@ -26,10 +26,8 @@ jobs:
           - name: Cache Haxelib dependencies
             uses: actions/cache@v4
             with:
-              path: |
-                C:/haxelib
-                %HOMEDRIVE%%HOMEPATH%/.haxe
-              key: ${{ runner.os }}-haxelib-${{ hashFiles('**/setup/Main.hx', '**/Project.xml', '**/project.xml') }}
+              path: C:/haxelib
+              key: ${{ runner.os }}-haxelib-${{ hashFiles('**/setup/Main.hx') }}
               restore-keys: |
                 ${{ runner.os }}-haxelib-
 
@@ -45,6 +43,8 @@ jobs:
               echo AFTER INSTALLING!!!
               haxelib list
             shell: cmd
+
+            # haxe -cp ./setup -D analyzer-optimize -main Main --interp
 
           - name: Create Version Tag
             run: echo "${{ github.run_id }}" > VERSION
