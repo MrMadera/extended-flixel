@@ -120,7 +120,7 @@ jobs:
         - name: Upload artifact
           uses: actions/upload-artifact@v4
           with:
-            path: tests/export/neko/bin
+            path: tests/export/linux/bin
             name: linuxBuild
             retention-days: 1
 
