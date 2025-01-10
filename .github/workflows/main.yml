@@ -101,7 +101,8 @@ jobs:
 
         - name: Install Haxelib Dependencies
           run: |
-            sudo apt-get install libvlc-dev
+            sudo apt-get update
+            sudo apt-get install -y libvlc-dev
             sudo apt-get install libvlccore-dev
             haxelib install hxcpp --quiet
             haxe -cp ./setup -D analyzer-optimize -main Main --interp
