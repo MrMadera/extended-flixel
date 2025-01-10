@@ -78,7 +78,7 @@ jobs:
             uses: actions/upload-artifact@v4
             with:
               path: tests/export/neko/bin
-              name: windowsBuild
+              name: macBuild
               retention-days: 1
 
     linux:
@@ -121,7 +121,7 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             path: tests/export/neko/bin
-            name: windowsBuild
+            name: linuxBuild
             retention-days: 1
 
     cancel_previous_workflows:
