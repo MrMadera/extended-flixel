@@ -1,7 +1,10 @@
 package flixel.net;
 
+#if sys
 import sys.io.Process;
 import sys.net.Host;
+#end
+
 import haxe.Http;
 
 using StringTools;
@@ -28,6 +31,7 @@ class InternetCheck
 
     public static function executeCurl(callback:Bool->Void) 
     {
+        #if sys
         try {
             var process = new Process("curl", ["-s", "-o", "/dev/null", "-w", "%{http_code}", "https://www.google.com"]);
             var outputBytes = process.stdout.readAll(); // Read the output as Bytes
@@ -39,5 +43,6 @@ class InternetCheck
         } catch (e:Dynamic) {
             callback(false); // If an exception occurs, assume no internet connection
         }
+        #end
     }
 }
