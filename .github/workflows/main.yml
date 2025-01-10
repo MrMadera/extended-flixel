@@ -38,7 +38,6 @@ jobs:
               echo BEFORE INSTALLING!!!
               haxelib list
               haxelib install hxcpp --quiet
-              haxelib install lime 8.2.0 --quiet
               haxe -cp ./setup -D analyzer-optimize -main Main --interp
               echo AFTER INSTALLING!!!
               haxelib list
