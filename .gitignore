@@ -2,3 +2,4 @@ tests/export
 tests/.haxelib
 tests/build_time
 tests/temp/*
+temp/*
