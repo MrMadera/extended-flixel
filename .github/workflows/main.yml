@@ -46,3 +46,14 @@ jobs:
               path: tests/export/windows/bin
               name: windowsBuild
               retention-days: 1
+  
+    cancel_previous_workflows:
+      runs-on: ubuntu-latest
+      permissions: 
+        actions: write
+
+      steps:
+        - name: Cancel previous workflows
+          uses: styfle/cancel-workflow-action@0.9.1
+          with:
+            access_token: ${{ github.token }}
