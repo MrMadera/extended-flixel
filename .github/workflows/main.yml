@@ -40,13 +40,18 @@ jobs:
             run: cmd /c "cd tests & haxelib run lime build windows --app-version="4.0.0-${{ github.run_id }}"
             shell: cmd
 
+    publish_artifact:
+        runs-on: ubuntu-latest
+        needs: [windows]
+
+        steps:
           - name: Upload artifact
             uses: actions/upload-artifact@v3
             with:
               path: tests/export/windows/bin
               name: windowsBuild
-              retention-days: 1
-  
+              retention-days: 
+
     cancel_previous_workflows:
         runs-on: ubuntu-latest
         permissions: 
