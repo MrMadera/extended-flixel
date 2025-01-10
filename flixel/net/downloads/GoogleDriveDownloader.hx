@@ -20,6 +20,7 @@ import haxe.zip.Entry;
 
 class GoogleDriveDownloader 
 {
+    #if sys
     public function new(url:String, _fileName:String) 
     {
         Thread.create(function() 
@@ -562,4 +563,5 @@ class GoogleDriveDownloader
      * If download is finished, you cannot delete the file and cancel the download
     **/
     public static var canCancelDownloads:Bool = true;
+    #end
 }
