@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    buildWindows:
+    windows:
         runs-on: windows-latest
 
         steps:
