@@ -28,19 +28,15 @@ jobs:
           - name: Install Haxelib
             run: |
               haxelib setup C:/haxelib
+              echo BEFORE INSTALLING!!!
               haxelib list
               haxelib install hxcpp --quiet
               haxelib install lime 8.2.0 --quiet
-              haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              haxelib --global install hmm
+              haxelib --global run hmm setup
+              haxelib --global run hmm install --quiet 
               haxelib list
             shell: cmd
-
-          - name: Update Cache
-            if: always()
-            uses: actions/cache@v4
-            with:
-              path: C:/haxelib
-              key: ${{ runner.os }}-haxelib-${{ github.run_id }}
 
           - name: Create Version Tag
             run: echo "${{ github.run_id }}" > VERSION
