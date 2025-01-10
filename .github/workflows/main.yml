@@ -71,7 +71,7 @@ jobs:
           - name: Compile
             run: |
               cd tests 
-              haxelib run lime build mac -cpp --app-version="4.0.0-${{ github.run_id }}"
+              haxelib run lime build mac -cpp -verbose --app-version="4.0.0-${{ github.run_id }}"
             shell: bash
 
           - name: Upload artifact
@@ -114,7 +114,7 @@ jobs:
         - name: Compile
           run: |
             cd tests 
-            haxelib run lime build linux -cpp -verbose --app-version="4.0.0-${{ github.run_id }}"
+            haxelib run lime build linux -cpp --app-version="4.0.0-${{ github.run_id }}"
           shell: bash
 
         - name: Upload artifact
