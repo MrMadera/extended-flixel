@@ -13,5 +13,5 @@ jobs:
       - name: Weekly Artifact Cleanup
         uses: jimschubert/delete-artifacts-action@v1
         with:
-          log_level: 'error'
+          log_level: 'warning'
           min_bytes: '0'
