@@ -148,7 +148,7 @@ jobs:
               Cheers,
               GitHub Actions
             to: ${{ secrets.EMAIL_ADDRESS }}
-            from: ${{ secrets.EMAIL_ADDRESS }}
+            from: notifications@github.com
 
     cancel_previous_workflows:
         runs-on: ubuntu-latest
