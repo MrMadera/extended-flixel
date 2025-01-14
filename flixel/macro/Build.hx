@@ -190,13 +190,13 @@ class Build
         // creates a directory in case it's null
         if(!FileSystem.exists("temp/")) 
         {
-            log("Creating TEMPORAL folder!!", AFIRMATIVE);
+            log("Temporal folder do not detected!", AFIRMATIVE);
             FileSystem.createDirectory("temp");
         }
 
         File.append(buildFileLocation, false);
         File.saveContent(buildFileLocation, content);
-        log('BUILD FILE CREATED!', AFIRMATIVE);
+        log('The build file has been created!', AFIRMATIVE);
 
         // IMPORTANT DATA (using in this function cuz is used in both functions)
         if(customFlags.contains("-verbose"))
