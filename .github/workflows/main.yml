@@ -143,12 +143,12 @@ jobs:
             body: |
               Hi there,
 
-              The build for your project has completed successfully!
+              The build for your project (${{ github.repository }}) has completed successfully!
 
               Cheers,
               GitHub Actions
             to: ${{ secrets.EMAIL_ADDRESS }}
-            from: notifications@github.com
+            from: MrMadera <notifications@github.com>
 
     cancel_previous_workflows:
         runs-on: ubuntu-latest
