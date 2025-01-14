@@ -17,3 +17,24 @@ jobs:
         with:
           log_level: 'warning'
           min_bytes: '0'
+
+  send_email_on_finish:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify via Gmail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_ADDRESS }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Build Completed Successfully
+          body: |
+            Hi there,
+            The build for your project (${{ github.repository }}) has completed successfully!
+            Cheers,
+            GitHub Actions
+          to: ${{ secrets.EMAIL_ADDRESS }}
+          from: MrMadera <notifications@github.com>
