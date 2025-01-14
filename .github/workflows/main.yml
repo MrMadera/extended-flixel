@@ -147,7 +147,7 @@ jobs:
 
               Cheers,
               GitHub Actions
-            to: ${{ secrets.MY_EMAIL }}
+            to: ${{ secrets.EMAIL_ADDRESS }}
             from: ${{ secrets.EMAIL_ADDRESS }}
 
     cancel_previous_workflows:
