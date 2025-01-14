@@ -127,6 +127,29 @@ jobs:
             name: linuxBuild
             retention-days: 1
 
+    send_email_on_finish:
+      needs: [windows, mac, linux]
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Notify via Gmail
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 587
+            username: ${{ secrets.EMAIL_ADDRESS }}
+            password: ${{ secrets.EMAIL_PASSWORD }}
+            subject: Build Completed Successfully
+            body: |
+              Hi there,
+
+              The build for your project has completed successfully!
+
+              Cheers,
+              GitHub Actions
+            to: ${{ secrets.MY_EMAIL }}
+            from: ${{ secrets.EMAIL_ADDRESS }}
+
     cancel_previous_workflows:
         runs-on: ubuntu-latest
         permissions: 
