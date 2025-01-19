@@ -17,9 +17,6 @@ import flixel.zip.Reader;
 import haxe.zip.Entry;
 #end
 
-// Direct link:
-//https://download1326.mediafire.com/bxesialfjqvgNZFE0xL0GqPEisM1mE5dhDS1-zzNhDem5gRYS_H9SAAX31svImmMS161gRg8tZTDOfUiJFrte7q-S-giRrOMrPDOmpLco7VLv0xkmqcKmRO19P_rKHuRWCtpz-on0nBbXkduIvc5t97pp55rqQGFEwNm-mT8J08/teq6fgks0mzhnm4/bin.zip
-
 class GoogleDriveDownloader 
 {
     #if sys
@@ -49,7 +46,7 @@ class GoogleDriveDownloader
     /**
      * Path of the URL
      * The path is the part which come after the domain.
-     * e.g. https://download1326.mediafire.com`/bxesialfjqvgNZFE0xL0GqPEisM1mE5dhDS1...` is the path, the other part 
+     * e.g. https://drive.google.com`/file/d/1HYL6-Uyiwf8sMmcQZY6CHvpd75FaSw1lS/view?usp=drive_link` is the path, the other part 
     **/
     public static var path:String;
 
