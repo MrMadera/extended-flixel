@@ -187,6 +187,8 @@ class Build
     {
         var content:String = Date.now().toString();
 
+        log();
+        
         // creates a directory in case it's null
         if(!FileSystem.exists("temp/")) 
         {
