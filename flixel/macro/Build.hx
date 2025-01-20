@@ -225,7 +225,11 @@ class Build
 
         var seconds = difference / 1000;
         if(isVerboseMode || isDebugMode) log('Dividing by 1000 we get $seconds');
-        log(ConsoleUtils.yellow + 'Build took: ' + seconds + ' seconds (${Math.round(seconds / 60)} minutes)' + ConsoleUtils.reset);
+
+        var minutes = Math.round(seconds / 60);
+        var minuteText:String;
+        if(minutes == 1) minuteText = 'minute'; else minuteText = 'minutes';
+        log(ConsoleUtils.yellow + 'Build took: ' + seconds + ' seconds ($minutes $minuteText)' + ConsoleUtils.reset);
 
         Sys.sleep(0.5);
         if (FileSystem.exists(buildFileLocation)) {
