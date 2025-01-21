@@ -193,6 +193,7 @@ class Build
         if(!FileSystem.exists("temp/")) 
         {
             log("Temporal folder do not detected!", AFIRMATIVE);
+            log();
             FileSystem.createDirectory("temp");
         }
 
