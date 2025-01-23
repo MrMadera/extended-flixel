@@ -58,10 +58,14 @@ jobs:
               haxelib setup ~/haxelib
             shell: bash
 
+            # haxe -cp ./setup -D analyzer-optimize -main Main --interp
           - name: Install Haxelib Dependencies
             run: |
               haxelib install hxcpp --quiet
-              haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              cd tests
+              haxelib --global --quiet install hmm
+              haxelib run hmm setup
+              haxelib run hmm install
               haxelib list
             shell: bash
 
