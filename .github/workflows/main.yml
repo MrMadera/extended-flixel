@@ -65,7 +65,7 @@ jobs:
               cd tests
               haxelib --global --quiet install hmm
               haxelib run hmm setup
-              haxelib run hmm install
+              haxelib run hmm install --quiet
               haxelib list
             shell: bash
 
