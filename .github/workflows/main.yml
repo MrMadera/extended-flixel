@@ -25,7 +25,10 @@ jobs:
           - name: Install Haxelib Dependencies
             run: |
               haxelib install hxcpp --quiet
-              haxe -cp ./setup -D analyzer-optimize -main Main --interp
+              cd tests
+              haxelib --global --quiet install hmm
+              haxelib run hmm setup
+              haxelib run hmm install --quiet
               haxelib list
             shell: cmd
 
@@ -108,7 +111,10 @@ jobs:
             sudo apt-get install libvlc-dev
             sudo apt-get install libvlccore-dev
             haxelib install hxcpp --quiet
-            haxe -cp ./setup -D analyzer-optimize -main Main --interp
+            cd tests
+            haxelib --global --quiet install hmm
+            haxelib run hmm setup
+            haxelib run hmm install --quiet
             haxelib list
           shell: bash
 
