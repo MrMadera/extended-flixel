@@ -6,7 +6,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
-import farfadox.utils.ui.CustomButton;
+import flixel.ui.CustomButton;
 
 class CustomNumericStepperUI extends FlxSpriteGroup
 {
