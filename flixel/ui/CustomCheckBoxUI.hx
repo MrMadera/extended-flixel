@@ -1,4 +1,4 @@
-package farfadox.utils.ui;
+package flixel.ui;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
