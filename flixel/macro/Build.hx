@@ -165,14 +165,15 @@ class Build
             else if(osHelper == 'mac' || osHelper == 'm') 
             {
                 Sys.command("lime update mac -verbose " + customFlags);
-                Sys.command("lime build mac " + customFlags);
+                var command = Sys.command("lime build mac " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime run mac " + customFlags);
             }
             else if(osHelper == 'linux' || osHelper == 'l') 
             {
                 Sys.command("lime update linux -verbose " + customFlags);
-                Sys.command("lime build linux " + customFlags);
+                var command = Sys.command("lime build linux " + customFlags);
+                if(command != 0) return;
                 calculateBuildTime();
                 Sys.command("lime run linux " + customFlags);
             }
