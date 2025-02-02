@@ -1,4 +1,4 @@
-package console;
+package flixel.console;
 
 class ConsoleUtils
 {
