@@ -1,7 +1,7 @@
 package flixel.macro;
 
 import haxe.io.Path;
-import console.ConsoleUtils;
+import flixel.console.ConsoleUtils;
 import sys.FileSystem;
 import sys.io.Process;
 import sys.io.File;
