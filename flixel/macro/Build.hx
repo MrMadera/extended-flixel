@@ -212,7 +212,7 @@ class Build
             else if(osName == 'mac' || osName == 'm') osName = "Mac";
             else if(osName == 'linux' || osName == 'l') osName = "Linux";
 
-            log("Building for " + osName + "...");
+            log("Running for " + osName + "...");
             Sys.sleep(0.4);
     
             var curDirectory = Sys.args().copy().pop();
