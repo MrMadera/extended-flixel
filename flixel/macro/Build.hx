@@ -29,6 +29,8 @@ class Build
                 build();
             case "test" | "t":
                 test();
+            case "run" | "r":
+                run();
             default:
                 Sys.println("Unknown command: " + args[0]);
         }    
@@ -175,6 +177,59 @@ class Build
                 var command = Sys.command("lime build linux " + customFlags);
                 if(command != 0) return;
                 calculateBuildTime();
+                Sys.command("lime run linux " + customFlags);
+            }
+        }
+        else
+        {
+            log("Invalid OS. Aborting...");
+            Sys.exit(1);
+        }
+    }
+
+    static function run()
+    {
+        log(warningText);
+        log("");
+        log("You're gonna execute a custom test process which is right now in BETA.");
+        log("");
+        Sys.print("Which OS are you running? [you can ONLY write one] (windows/mac/linux) ");
+        var osHelper = Sys.stdin().readLine();
+        if(["w", "windows", "m", "mac", "l", "linux"].contains(osHelper))
+        {
+            log("");
+            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
+            var flagHelpder = Sys.stdin().readLine();
+            if(flagHelpder.toLowerCase().trim() != "")
+            {
+                customFlags = flagHelpder;
+            }
+
+            // starting compilation
+            osName = osHelper;
+
+            if(osName == 'windows' || osName == 'w') osName = "Windows";
+            else if(osName == 'mac' || osName == 'm') osName = "Mac";
+            else if(osName == 'linux' || osName == 'l') osName = "Linux";
+
+            log("Building for " + osName + "...");
+            Sys.sleep(0.4);
+    
+            var curDirectory = Sys.args().copy().pop();
+            Sys.setCwd(curDirectory);
+
+            if(customFlags.contains("-reinstall")) log('Reinstall flag is not avaible here!');
+            
+            if(osHelper == 'windows' || osHelper == 'w')
+            {
+                Sys.command("lime run windows " + customFlags);
+            }
+            else if(osHelper == 'mac' || osHelper == 'm') 
+            {
+                Sys.command("lime run mac " + customFlags);
+            }
+            else if(osHelper == 'linux' || osHelper == 'l') 
+            {
                 Sys.command("lime run linux " + customFlags);
             }
         }
