@@ -6,6 +6,9 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxSpriteGroup;
 
+/**
+ * Custom button that extends `FlxSpriteGroup` with customizable functions
+**/
 class CustomButton extends FlxSpriteGroup
 {
     public var bgSelectedColor:FlxColor = 0xFFFFFFFF;

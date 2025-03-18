@@ -9,6 +9,9 @@ import haxe.Http;
 
 using StringTools;
 
+/**
+ * Class that contains useful function to check internet connection and work with it
+**/
 class InternetCheck
 {
     public static function execute(callback:Bool->Void)

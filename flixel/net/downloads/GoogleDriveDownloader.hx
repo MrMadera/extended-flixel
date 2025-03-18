@@ -17,6 +17,9 @@ import flixel.zip.Reader;
 import haxe.zip.Entry;
 #end
 
+/**
+ * Class that downloads files from Google Drive
+**/
 class GoogleDriveDownloader 
 {
     #if sys

@@ -7,6 +7,9 @@ import flixel.util.FlxColor;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxObject;
 
+/**
+ * Custom checkbox that extends `FlxSpriteGroup` with customizable functions
+**/
 class CustomCheckBoxUI extends FlxSpriteGroup
 {
     public var checkBox:FlxSprite;

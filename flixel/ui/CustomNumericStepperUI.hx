@@ -8,6 +8,9 @@ import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.ui.CustomButton;
 
+/**
+ * Custom numeric stepper that extends `FlxSpriteGroup` with customizable functions
+**/
 class CustomNumericStepperUI extends FlxSpriteGroup
 {
     public var bg:FlxSprite;

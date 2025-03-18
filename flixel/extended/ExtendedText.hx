@@ -4,6 +4,9 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
+/**
+ * Class that extends `FlxSpriteGroup`. Uses `FlxText` as a base + new functions
+**/
 class ExtendedText extends FlxSpriteGroup
 {
     /**

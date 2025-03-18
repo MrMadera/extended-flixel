@@ -1,5 +1,8 @@
 package flixel.console;
 
+/**
+ * Class that contains some useful codes for text styles & colors
+**/
 class ConsoleUtils
 {
     // Colors
