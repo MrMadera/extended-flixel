@@ -9,7 +9,7 @@
     "contributors": ["MrMadera"],
     "dependencies": 
     {
-        "flixel": "5.5.0",
+        "flixel": "6.0.0",
         "HtmlParser": "3.4.0"
     }
 }
