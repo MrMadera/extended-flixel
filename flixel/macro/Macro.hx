@@ -13,7 +13,6 @@ class Macro {
     public static function initiateMacro()
     {
         #if (!SKIP_MACRO)
-            log('Macro from extended-flixel started!');
             log('Building at ${Date.now()}');
             #if (debug || extended_macro)
                 log('--------------- [DEBUG MACRO ENABLED] ---------------');
