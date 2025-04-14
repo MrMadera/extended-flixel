@@ -22,6 +22,7 @@ class Macro {
                 log('');
                 log('Checking for internet connection...');
                 checkingInternetConnection();
+                getLibraries();
             #end
         #end
 
@@ -39,8 +40,34 @@ class Macro {
             }
         });
     }
+
+    static function getLibraries()
+    {
+        final command = "haxelib list";
+        var library_list = new Process(command);
+        if(library_list.exitCode() != 0) {
+            log("Error: Command could not be executed.");
+            return;
+        }
+        var output = library_list.stdout.readAll().toString().split('\n');
+
+        var amountOfLibraries = output.length;
+
+        log();
+        log('Found ${amountOfLibraries} libraries:');
+
+        // get libraries names
+        for(i in 0...output.length) {
+            var libraries = output[i].split(':');
+            var libraryName = libraries[0].trim();
+
+            if(libraryName == "") continue;
+
+            log(' * $libraryName');
+        }
+    }
     
-    public static function log(?log:String = "") {
+    public static function log(?log:Dynamic = "") {
         #if sys
         Sys.println(log);
         #else
