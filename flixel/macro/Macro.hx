@@ -14,15 +14,16 @@ class Macro {
     {
         #if (!SKIP_MACRO)
             log('Building at ${Date.now()}');
-            #if (debug || extended_macro)
-                log('--------------- [DEBUG MACRO ENABLED] ---------------');
-                log(extendedFlixelText);
+            log('--------------- [MACRO ENABLED] ---------------');
 
-                log('');
-                log('Checking for internet connection...');
-                checkingInternetConnection();
-                getLibraries();
+            #if (debug || extended_macro) 
+                log(extendedFlixelText); 
             #end
+
+            log('');
+            log('Checking for internet connection...');
+            checkingInternetConnection();
+            getLibraries();
         #end
 
         return macro {};
@@ -64,6 +65,8 @@ class Macro {
 
             log(' * $libraryName');
         }
+
+        log();
     }
     
     public static function log(?log:Dynamic = "") {
