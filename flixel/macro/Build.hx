@@ -97,18 +97,21 @@ class Build
                 if(os == 'windows' || os == 'w')
                 {
                     Sys.command("lime update windows -verbose " + customFlags);
+                    logProjectXMLData();
                     Sys.command("lime build windows " + customFlags);
                     calculateBuildTime();
                 }
                 else if(os == 'mac' || os == 'm') 
                 {
                     Sys.command("lime update mac -verbose " + customFlags);
+                    logProjectXMLData();
                     Sys.command("lime build mac " + customFlags);
                     calculateBuildTime();
                 }
                 else if(os == 'linux' || os == 'l') 
                 {
                     Sys.command("lime update linux -verbose " + customFlags);
+                    logProjectXMLData();
                     Sys.command("lime build linux " + customFlags);
                     calculateBuildTime();
                 }
@@ -159,6 +162,7 @@ class Build
             if(osHelper == 'windows' || osHelper == 'w')
             {
                 Sys.command("lime update windows -verbose " + customFlags);
+                logProjectXMLData();
                 var command = Sys.command("lime build windows " + customFlags);
                 if(command != 0) return;
                 calculateBuildTime();
@@ -167,6 +171,7 @@ class Build
             else if(osHelper == 'mac' || osHelper == 'm') 
             {
                 Sys.command("lime update mac -verbose " + customFlags);
+                logProjectXMLData();
                 var command = Sys.command("lime build mac " + customFlags);
                 calculateBuildTime();
                 Sys.command("lime run mac " + customFlags);
@@ -174,6 +179,7 @@ class Build
             else if(osHelper == 'linux' || osHelper == 'l') 
             {
                 Sys.command("lime update linux -verbose " + customFlags);
+                logProjectXMLData();
                 var command = Sys.command("lime build linux " + customFlags);
                 if(command != 0) return;
                 calculateBuildTime();
@@ -242,22 +248,6 @@ class Build
 
     static function createBuildFile()
     {
-        var content:String = Date.now().toString();
-
-        log();
-        
-        // creates a directory in case it's null
-        if(!FileSystem.exists("temp/")) 
-        {
-            log("Temporal folder do not detected!", AFIRMATIVE);
-            log();
-            FileSystem.createDirectory("temp");
-        }
-
-        File.append(buildFileLocation, false);
-        File.saveContent(buildFileLocation, content);
-        log('The build file has been created!', AFIRMATIVE);
-
         // IMPORTANT DATA (using in this function cuz is used in both functions)
         if(customFlags.contains("-verbose"))
         {
@@ -268,6 +258,24 @@ class Build
         {
             isDebugMode = true;
         }
+
+        var content:String = Date.now().toString();
+
+        log();
+        
+        // creates a directory in case it's null
+        if(!FileSystem.exists("temp/")) 
+        {
+            if(isVerboseMode) {
+                log("TEMPORAL FOLDER NOT DETECTED!", ERROR, true);
+                log();
+            } 
+            FileSystem.createDirectory("temp");
+        }
+
+        File.append(buildFileLocation, false);
+        File.saveContent(buildFileLocation, content);
+        log('The build file has been created!', AFIRMATIVE, true);
     }
 
     static function calculateBuildTime()
@@ -329,6 +337,38 @@ class Build
         Sys.command("hmm reinstall -f");
     }
 
+    static function logProjectXMLData()
+    {
+        var cwd = Sys.getCwd();
+        cwd = Path.normalize(cwd);
+
+        if(isDebugMode || isVerboseMode) log('Seraching project.xml file in the following directory: $cwd', AFIRMATIVE, true);
+
+        var projectXML = File.getContent(cwd + '/project.xml');
+        var appStuff = Xml.parse(projectXML).firstElement().elementsNamed("app"); // getting the first one cuz there are like a ton of app references????
+
+        var app = null;
+        for (elem in appStuff) {
+            if (elem.get("title") != null && elem.get("version") != null) {
+                app = elem;
+                break;
+            }
+        }
+
+        // avoiding if it's null haha it has crashed 7 times already :)
+        if (app != null) {
+            var title = app.get("title");
+            var version = app.get("version");
+
+            log();
+            log(' - Project title: ' + title, NORMAL, true);
+            log(' - Project version: ' + version, NORMAL, true);
+            log();
+        } else {
+            log("Could not find an <app> node with title and version.", ERROR, true);
+        }
+    }
+
     public static function log(?log:String = "", lineType:LineType = NORMAL, bold:Bool = false, underline:Bool = false) 
     {
         #if sys
@@ -377,12 +417,12 @@ class Build
                     if(bold)
                     {
                         var prevLog = log;
-                        log = ConsoleUtils.bold + prevLog;
+                        log = ConsoleUtils.bold + prevLog + ConsoleUtils.reset;
                     }
                     if(underline)
                     {
                         var prevLog = log;
-                        log = ConsoleUtils.underline + prevLog;
+                        log = ConsoleUtils.underline + prevLog + ConsoleUtils.reset;
                     }
 
                     Sys.println(log);
