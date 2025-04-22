@@ -9,14 +9,23 @@ import Math;
 
 using StringTools;
 
+/**
+ * Simple `enum` to determine if a build should run or not when it compiles.
+ */
 enum CommandType
 {
     BUILD;
     TEST;
 }
 
+/**
+ * Class used in this haxelib to build the currently open project with `macro`s.
+ */
 class Build
 {
+    /**
+     * The main funciton that'll execute when building a project.
+     */
     public static function main() 
     {
         var args = Sys.args();
@@ -42,6 +51,9 @@ class Build
         }    
     }
 
+    /**
+     * General setup of the project build.
+     */
     static function setup() 
     {
         var cmdContent = '@haxelib --global run extended-flixel %*\n';
@@ -62,6 +74,11 @@ class Build
         log("Done.");
     }
 
+    /**
+     * Function that compiles the currently open project.
+     * 
+     * @param type Set it to `TEST` if you want to instantly run the product of the compilation process. If not, set it to `BUILD`.
+     */
     static function compile(type:CommandType)
     {
         log(warningText);
@@ -118,6 +135,9 @@ class Build
         }
     }
 
+    /**
+     * Runs the current product of compilation. (basically the executable in the build folder)
+     */
     static function run()
     {
         Sys.print("Which OS are you running? [you can ONLY write one] (windows/mac/linux) ");
@@ -168,6 +188,9 @@ class Build
         }
     }
 
+    /**
+     * Creates the build file for the current project.
+     */
     static function createBuildFile()
     {
         // IMPORTANT DATA (using in this function cuz is used in both functions)
@@ -189,17 +212,24 @@ class Build
         if(!FileSystem.exists("temp/")) 
         {
             if(isVerboseMode) {
-                log("TEMPORAL FOLDER NOT DETECTED!", ERROR, true);
-                log();
+                logChunk([
+                    "TEMPORAL FOLDER NOT DETECTED!",
+                    ""
+                ], [1 => ERROR], [1 => true]);
+                // log("TEMPORAL FOLDER NOT DETECTED!", ERROR, true);
+                // log();
             } 
             FileSystem.createDirectory("temp");
         }
 
         File.append(buildFileLocation, false);
         File.saveContent(buildFileLocation, content);
-        log('The build file has been created!', AFIRMATIVE, true);
+        log('The build file has been created!', AFFIRMATIVE, true);
     }
 
+    /**
+     * Calculates the time it'll take to build the current project.
+     */
     static function calculateBuildTime()
     {
         var dateWhenBuildStarted = Date.fromString(File.getContent(buildFileLocation));
@@ -249,22 +279,35 @@ class Build
         }
     }
 
+    /**
+     * Rounds a number (`Float`) to the nearest `Float` with `precision` decimals.
+     * 
+     * @param value     The decimal number to round.
+     * @param precision How many decimals the rounded number should have.
+     * @return Float    The rounded `Float` with `precision` decimals.
+     */
     static function roundDecimal(value:Float, precision:Int):Float {
-        var factor = Math.pow(10, precision);
+        var factor:Float = Math.pow(10, precision);
         return Math.round(value * factor) / factor;
     }
 
+    /**
+     * Reinstalls all of the libraries in `hmm.json` with CMD.
+     */
     static function reinstallLibraries()
     {
         Sys.command("hmm reinstall -f");
     }
 
+    /**
+     * Logs all of the data in `project.xml`.
+     */
     static function logProjectXMLData()
     {
         var cwd = Sys.getCwd();
         cwd = Path.normalize(cwd);
 
-        if(isDebugMode || isVerboseMode) log('Seraching project.xml file in the following directory: $cwd', AFIRMATIVE, true);
+        if(isDebugMode || isVerboseMode) log('Seraching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
 
         var projectXML = File.getContent(cwd + '/project.xml');
         var appStuff = Xml.parse(projectXML).firstElement().elementsNamed("app"); // getting the first one cuz there are like a ton of app references????
@@ -291,6 +334,47 @@ class Build
         }
     }
 
+    /**
+     * Logs a chunk of `String`s onto the console.
+     * Alternative to `log` when logging multiple things at once in different calls.
+     * 
+     * @param logs      The `Array` containing every single log.
+     * @param lineTypes A map containing what `LineType` each log has. **(THE KEY OF EACH VALUE SHOULD BE THE SAME AS THE TARGET LOG INDEX IN `logs`)**
+     * @param bold      A map containing which logs are written in bold letters. **(same `lineTypes` conditions apply)**
+     * @param underline A map containing which logs are underlined. **(same `lineTypes` conditions apply)**
+     */
+    public static function logChunk(?logs:Array<String>, ?lineTypes:Map<Int, LineType>, ?bolds:Map<Int, Bool>, ?underlined:Map<Int, Bool>)
+    {
+        if (logs == null) logs = [""];
+        if (lineTypes == null) lineTypes = [1 => NORMAL];
+        if (bolds == null) bolds = [1 => false];
+        if (underlined == null) underlined = [1 => false];
+
+        for(i in 0...logs.length)
+        {
+            var l:String = logs[i];
+
+            var lineType:LineType = lineTypes.get(i);
+            if(lineType == null) lineType = NORMAL;
+
+            var bold:Bool = bolds.get(i);
+            if(bold == null) bold = false;
+
+            var underline:Bool = underlined.get(i);
+            if(underline == null) underline = false;
+
+            log(l, lineType, bold, underline);
+        }
+    }
+
+    /**
+     * Logs a message (`String`) onto the system console.
+     * 
+     * @param log       The message that will be logged.
+     * @param lineType  The type of line assigned to the message. (see `LineType`)
+     * @param bold      Defines if the message text will be bold.
+     * @param underline Defines if the message text will be underlined.
+     */
     public static function log(?log:String = "", lineType:LineType = NORMAL, bold:Bool = false, underline:Bool = false) 
     {
         #if sys
@@ -322,7 +406,7 @@ class Build
                     }
 
                     Sys.println(ConsoleUtils.yellow + log + ConsoleUtils.reset);
-                case AFIRMATIVE:
+                case AFFIRMATIVE:
                     if(bold)
                     {
                         var prevLog = log;
@@ -366,6 +450,6 @@ enum LineType
 {
     ERROR;
     WARNING;
-    AFIRMATIVE;
+    AFFIRMATIVE;
     NORMAL;
 }

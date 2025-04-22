@@ -18,11 +18,17 @@ import haxe.zip.Entry;
 #end
 
 /**
- * Class that downloads files from Google Drive
+ * Class that downloads files from Google Drive if there's internet connection available.
 **/
 class GoogleDriveDownloader 
 {
     #if sys
+    /**
+     * Creates a new downloader and begins downloading the given url.
+     * 
+     * @param url       The url to download from.
+     * @param _fileName The name of the output file.
+     */
     public function new(url:String, _fileName:String) 
     {
         Thread.create(function() 
@@ -34,42 +40,43 @@ class GoogleDriveDownloader
     }
 
     /**
-     * While downloading, this variable will be `true`
+     * Value set to `true` while downloading.
     **/
     public static var isDownloading:Bool = false;
     /**
-     * Socket variable. Main handler of downloads
+     * The main handler of downloads.
     **/
     public static var socket:Socket;
 
     /**
-     * Domain of the URL
+     * The domain of the URL.
+     * e. g. **https://drive.google.com/**
     **/
     public static var domain:String;
     /**
-     * Path of the URL
-     * The path is the part which come after the domain.
-     * e.g. https://drive.google.com`/file/d/1HYL6-Uyiwf8sMmcQZY6CHvpd75FaSw1lS/view?usp=drive_link` is the path, the other part 
+     * The path of the URL;
+     * the part of the URL that comes right after the domain.
+     * e. g. https://drive.google.com/ `file/d/1HYL6-Uyiwf8sMmcQZY6CHvpd75FaSw1lS/view?usp=drive_link`
     **/
     public static var path:String;
 
     /**
-     * The current amount of bytes written during the download
+     * The current amount of bytes written during the download at the current moment.
     **/
     public static var bytesDownloaded:Float;
     
     /**
-     * The output file
+     * The output file.
     **/
 	public static var file:FileOutput;
 
     /**
-     * The extension of the file
+     * The extension / type of the file. (e. g. `.exe`)
     **/
     public static var extension:String;
 
     /**
-     * The name of the output file
+     * The name of the output file.
     **/
     public static var fileName:String;
 
@@ -79,34 +86,34 @@ class GoogleDriveDownloader
     public static var downloadStatus:String;
 
     /**
-     * The default path of the download (downloads folder in the .exe path)
+     * The default path to which downloads will be output (downloads folder in the .exe path).
     **/
     private static var defaultOutputPath:String = '';
     /**
-     * The custom path. If equals `''`, the file will be downloaded in the default path
+     * If given, the custom path to which downloads will be output. If equals `''`, the downloaded file will be output in `defaultOutputPath`.
     **/
     public static var customOutputPath:String = '';
     /**
-     * Custom path where you can put your unzipped stuff. If equals `''`, stuff will be unzipped in the `customOutputPath` or `defaultOutputPath`
+     * Custom path where you can put your unzipped output. If equals `''`, stuff will be unzipped in `customOutputPath` or `defaultOutputPath`
     **/
     public static var unZipCustomPath:String = '';
 
     /**
-     * If download is complete, this funcion will be executed
+     * If the download is completed successfully, this function will be called.
     **/
     public static var onSuccess:Void -> Null<Void>;
     /**
-     * If download is canceled, this funcion will be executed
+     * If the download is cancelled, this function will be called.
     **/
     public static var onCancel:Void -> Null<Void>;
     /**
-     * If unzip process is completed, this funcion will be executed
+     * If the unzipping process is completed, this function will be called.
     **/
     public static var onZipSuccess:Void -> Null<Void>;
 
     /**
-     * Function which downloads files from an url
-     @param url the DIRECT url of the file
+     * Function that downloads a file from a specific url.
+     * @param url The direct url where the target file is located. **(IT MUST BE A DIRECT DOWNLOAD URL)**
     **/
     public static function downloadFile(url:String)
     {
@@ -391,15 +398,15 @@ class GoogleDriveDownloader
     }
 
     /**
-     * The total amount of bytes of the file
+     * The total amount of bytes of the file.
     **/
     public static var totalBytes:Float = 0;
 
     //Get google drive data
 
     /**
-     * Function which gets the direct url from a normal url
-     @param url the normal url
+     * Function that gets the direct url of a download from a normal GD url.
+     * @param url The url from which the direct download url will be extracted.
     **/
     public static function fetchGoogleDriveData(url:String)
     {
@@ -413,17 +420,19 @@ class GoogleDriveDownloader
     }
 
     /**
-     * During unzipping, this variable will be `true`
+     * Value set to `true` while unzipping the downloaded file.
     **/
     public static var unzipping:Bool = false;
     /**
-     * If `true`, it will start the unzip process when the download finish
+     * If `true`, the unzipping process will automatically start right when the file is fully downloaded.
     **/
     public static var autoUnzip:Bool = false;
 
     /**
-     * Function which uncompress .zip files
-    **/
+     * Function used to unzip (decompress) a specific file.
+     * 
+     * @param path The path of the file to unzip.
+     */
     public static function unZip(path:String)
     {
         trace('Starting unzip process!');
@@ -508,7 +517,9 @@ class GoogleDriveDownloader
     }
 
     /**
-     * Set `domain` and `path` from the direct url
+     * Sets `domain` and `path` based on the given url.
+     * 
+     * @param url The url to extract the domain and path from.
     **/
     public static function setDomains(url:String)
     {
@@ -524,6 +535,9 @@ class GoogleDriveDownloader
         path = fpath;
     }
 
+    /**
+     * Checks the format of the output file to check if it can be unzipped.
+     */
     private static function checkFormat()
     {
         if(extension == 'zip' && autoUnzip)
@@ -535,6 +549,9 @@ class GoogleDriveDownloader
         else downloadStatus = 'Download complete!';
     }
 
+    /**
+     * Resets the information of this downloader to let the door open for downloading another file.
+     */
     private static function resetInfo()
     {
         if (file != null)
@@ -548,6 +565,12 @@ class GoogleDriveDownloader
         //canCancelDownloads = true;
     }
 
+    /**
+     * 
+     * 
+     * @param b 
+     * @return String
+     */
     public static function loadedBytes(b:Float):String
     {
         if(b > 1024000000) return FlxMath.roundDecimal(b / 1024000000, 2) + "GB";
@@ -557,12 +580,13 @@ class GoogleDriveDownloader
     }
 
     /**
-     * If download is canceled, this will turn `true`
+     * This value will be `true` if the download gets canceled.
     **/
     public static var canceledDownload:Bool = false;
 
     /**
-     * If download is finished, you cannot delete the file and cancel the download
+     * If this is true, canceling the download will be impossible.
+     * Usually set to true when finishing the download.
     **/
     public static var canCancelDownloads:Bool = true;
     #end
