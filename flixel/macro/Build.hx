@@ -124,6 +124,7 @@ class Build
         }
     }
 
+    // TO DO: merge this function with the one above, so we reduce the amount of code a ton
     static function test()
     {
         log(warningText);
@@ -158,33 +159,15 @@ class Build
             createBuildFile();
 
             if(customFlags.contains("-reinstall")) reinstallLibraries();
-            
-            if(osHelper == 'windows' || osHelper == 'w')
-            {
-                Sys.command("lime update windows -verbose " + customFlags);
-                logProjectXMLData();
-                var command = Sys.command("lime build windows " + customFlags);
-                if(command != 0) return;
-                calculateBuildTime();
-                Sys.command("lime run windows " + customFlags);
-            }
-            else if(osHelper == 'mac' || osHelper == 'm') 
-            {
-                Sys.command("lime update mac -verbose " + customFlags);
-                logProjectXMLData();
-                var command = Sys.command("lime build mac " + customFlags);
-                calculateBuildTime();
-                Sys.command("lime run mac " + customFlags);
-            }
-            else if(osHelper == 'linux' || osHelper == 'l') 
-            {
-                Sys.command("lime update linux -verbose " + customFlags);
-                logProjectXMLData();
-                var command = Sys.command("lime build linux " + customFlags);
-                if(command != 0) return;
-                calculateBuildTime();
-                Sys.command("lime run linux " + customFlags);
-            }
+
+            var lowerCaseOsName = osName.toLowerCase();
+
+            Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
+            logProjectXMLData();
+            var command = Sys.command("lime build " + lowerCaseOsName + " " + customFlags);
+            if(command != 0) return;
+            calculateBuildTime();
+            Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
         }
         else
         {
