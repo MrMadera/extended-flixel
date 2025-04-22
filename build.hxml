@@ -1,4 +1,6 @@
 -cp flixel
+-lib flixel:6.0.0
+-lib HtmlParser:3.4.0
 
 --each
 
