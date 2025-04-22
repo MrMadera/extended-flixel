@@ -10,10 +10,15 @@ import haxe.Http;
 using StringTools;
 
 /**
- * Class that contains useful function to check internet connection and work with it
+ * Class containing a couple of useful functions to use internet connections.
 **/
 class InternetCheck
 {
+    /**
+     * Used to test url executing with Google to check for an internet connection.
+     * 
+     * @param callback Function called when the url reacts.
+     */
     public static function execute(callback:Bool->Void)
     {
         var url = "https://www.google.com";
@@ -34,6 +39,11 @@ class InternetCheck
         #end
     }
 
+    /**
+     * Function used to execute curl and check if an internet connection is available.
+     * 
+     * @param callback Function called back when finishing checks.
+     */
     public static function executeCurl(callback:Bool->Void) 
     {
         #if sys

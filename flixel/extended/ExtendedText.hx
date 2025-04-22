@@ -3,32 +3,42 @@ package flixel.extended;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.FlxSprite;
 
 /**
- * Class that extends `FlxSpriteGroup`. Uses `FlxText` as a base + new functions
+ * Alternative class to [FlxText](https://api.haxeflixel.com/flixel/text/FlxText.html) extending from [FlxSpriteGroup](https://api.haxeflixel.com/flixel/group/FlxSpriteGroup.html) to add more QoL functions and shortcuts.
 **/
 class ExtendedText extends FlxSpriteGroup
 {
     /**
-     * the underline sprite used when `setUnderline` is used
+     * The underline sprite used when `setUnderline` is used.
     **/
     public var underlineSprite:FlxSprite;
 
     /**
-     * the text itself. if you want to do something to the text first refer to this variable
+     * The text of this instance. If you want to do something to this instance's text, refer to this variable.
     **/
     public var txt:FlxText;
 
     /**
-     * local x position
+     * Local X position of this instance.
     **/
     var localX:Float;
     
     /**
-     * local y position
+     * Local Y position of this instance.
     **/
     var localY:Float;
 
+    /**
+     * Instantiates a new instance of this class.
+     * 
+     * @param x     The X position of this text.
+     * @param y     The Y position of this text.
+     * @param width The width of this text's bounding box.
+     * @param text  The text that'll be initially shown on this instance.
+     * @param size  The initial size of this text.
+     */
     public function new(x:Float, y:Float, width:Int, text:String, size:Int)
     {
         super();
@@ -41,7 +51,7 @@ class ExtendedText extends FlxSpriteGroup
     }
 
     /**
-     * sets the text bold if the font allows it
+     * Makes the text bold if allowed by the font.
     **/
     public function setBold(isbold:Bool)
     {
@@ -49,7 +59,7 @@ class ExtendedText extends FlxSpriteGroup
     }
 
     /**
-     * sets the text italic if the font allows it
+     * Makes the text italic (cursive) if allowed by the font.
     **/
     public function setItalic(isitalic:Bool)
     {
@@ -57,10 +67,10 @@ class ExtendedText extends FlxSpriteGroup
     }
 
     /**
-     * adds a markup to the text (this allows to add colors to different parts of the text)
-     @param text the text lol
-     @param color the color of the text
-     @param char the char that will state the color pattern
+     * Adds a markup to the text. This allows to add colors to different parts of the text. Refer to RichText in other engines.
+     * @param text  The text to apply the markup to.
+     * @param color The color of the text.
+     * @param char  The character that will state the color pattern.
     **/
     public function addMarkup(text:String, color:FlxColor, char:String)
     {
@@ -68,7 +78,7 @@ class ExtendedText extends FlxSpriteGroup
     }
 
     /**
-     * adds an underline
+     * Adds an underline to this text as a sprite.
     **/
     public function setUnderline(size:Int, color:FlxColor = FlxColor.WHITE)
     {
@@ -78,7 +88,9 @@ class ExtendedText extends FlxSpriteGroup
     }
     
     /**
-     * sets the alignment
+     * Sets the current alignment of the text.
+     * 
+     * @param alignmentString The alignment that the text will have.
     **/
     public function setAlignment(alignmentString:String)
     {
@@ -96,7 +108,9 @@ class ExtendedText extends FlxSpriteGroup
     }
     
     /**
-     * what do you think this will do you dumdum???
+     * Sets the color of the text to a set color.
+     * 
+     * @param thiscolor The color that the entire text will be set to.
     **/
     public function setTextColor(thiscolor:FlxColor)
     {

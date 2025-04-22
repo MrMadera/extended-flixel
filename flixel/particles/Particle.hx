@@ -1,19 +1,41 @@
 package flixel.particles;
 
+import flixel.FlxSprite;
+import flixel.FlxG;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
 class Particle extends FlxSprite
 {
+	/**
+	 * Tween used to make this particle disappear.
+	 */
 	public var particleTween:FlxTween;
+	/**
+	 * The amount of time this particle has left until it disappears.
+	 */
 	var lifeTime:Float = 0;
+	/**
+	 * The constant decay of the alpha of this particle during its lifetime.
+	 */
 	var decay:Float = 0;
+	/**
+	 * 
+	 */
 	var originalScale:Float = 1;
 
+	/**
+	 * The current alpha of this particle. Shouldn't be changed.
+	 */
 	public var _alpha:Float = 1;
 
-	var finalY:Float = 300;
-
+	/**
+	 * Instantiates a new particle.
+	 * 
+	 * @param x 			The X position of the particle.
+	 * @param y 			The Y position of the particle.
+	 * @param particlePath 	The path of the particle's image in `assets`.
+	 */
 	public function new(x:Float, y:Float, particlePath:Dynamic) // dynamic becasue you can load strings or FlxGraphics
 	{
 		super(x, y);
@@ -31,11 +53,17 @@ class Particle extends FlxSprite
 		particleTween = FlxTween.tween(this, {x: x + FlxG.random.int(70, 100)}, 2, {ease: FlxEase.cubeInOut, type: PINGPONG});
 	}
 
+	/**
+	 * Pauses this particle's tween.
+	 */
 	public function pause()
 	{
 		particleTween.active = false;
 	}
 
+	/**
+	 * Resumes this particle's tween.
+	 */
 	public function resume()
 	{
 		particleTween.active = true;
@@ -57,7 +85,6 @@ class Particle extends FlxSprite
         }
 
 		y--;
-		finalY--;
 		alpha = _alpha;
 	}
 }

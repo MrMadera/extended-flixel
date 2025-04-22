@@ -9,19 +9,37 @@ using StringTools;
 
 class Macro {
 
+    /**
+     * Initializes the macro for usage.
+     */
     macro
     public static function initiateMacro()
     {
         #if (!SKIP_MACRO)
-            log('Building at ${Date.now()}');
-            log('--------------- [MACRO ENABLED] ---------------');
+            // log('Building at ${Date.now()}');
+            // log('--------------- [MACRO ENABLED] ---------------');
 
-            #if (debug || extended_macro) 
-                log(extendedFlixelText); 
-            #end
+            // #if (debug || extended_macro) 
+            //     log(extendedFlixelText); 
+            // #end
 
-            log('');
-            log('Checking for internet connection...');
+            // log('');
+            // log('Checking for internet connection...');
+
+            logChunk([
+                'Building at ${Date.now()}',
+
+                '--------------- [MACRO ENABLED] ---------------',
+
+                #if (debug || extended_macro)
+                extendedFlixelText,
+                #end
+
+                '',
+
+                'Checking for internet connection...'
+            ]);
+
             checkingInternetConnection();
             getLibraries();
         #end
@@ -29,6 +47,9 @@ class Macro {
         return macro {};
     }
 
+    /**
+     * Checks if there's an internet connection available in the current device.
+     */
     static function checkingInternetConnection()
     {
         InternetCheck.executeCurl(function(success:Bool) 
@@ -41,20 +62,28 @@ class Macro {
         });
     }
 
+    /**
+     * Gets the list of libraries that are currently installed in the caller's haxelib.
+     */
     static function getLibraries()
     {
-        final command = "haxelib list";
-        var library_list = new Process(command);
+        final command:String = "haxelib list";
+        var library_list:Process = new Process(command);
         if(library_list.exitCode() != 0) {
             log("Error: Command could not be executed.");
             return;
         }
-        var output = library_list.stdout.readAll().toString().split('\n');
+        var output:Array<String> = library_list.stdout.readAll().toString().split('\n');
 
-        var amountOfLibraries = output.length;
+        final amountOfLibraries:Int = output.length;
 
-        log();
-        log('Found ${amountOfLibraries} libraries:');
+        // log();
+        // log('Found ${amountOfLibraries} libraries:');
+        logChunk([
+            "",
+            
+            'Found ${amountOfLibraries} libraries:'
+        ]);
 
         // get libraries names
         for(i in 0...output.length) {
@@ -67,6 +96,24 @@ class Macro {
         }
 
         log();
+    }
+
+    /**
+     * Logs multiple values at once in order.
+     * 
+     * @param logs The values that'll be logged. Must be in order.
+     */
+    public static function logChunk(?logs:Array<Dynamic>) {
+        if(logs == null) logs = [""];
+
+        for(log in logs)
+        {
+            #if sys
+            Sys.println(log);
+            #else
+            trace('\n' + log)
+            #end
+        }
     }
     
     public static function log(?log:Dynamic = "") {
