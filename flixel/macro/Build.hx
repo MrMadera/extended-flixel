@@ -9,6 +9,12 @@ import Math;
 
 using StringTools;
 
+enum CommandType
+{
+    BUILD;
+    TEST;
+}
+
 class Build
 {
     public static function main() 
@@ -26,9 +32,9 @@ class Build
                 Sys.println("Setup started!");
                 setup();
             case "build" | "b":
-                build();
+                compile(BUILD);
             case "test" | "t":
-                test();
+                compile(TEST);
             case "run" | "r":
                 run();
             default:
@@ -56,18 +62,21 @@ class Build
         log("Done.");
     }
 
-    static function build()
+    static function compile(type:CommandType)
     {
         log(warningText);
-        log("");
+        log();
         log("You're gonna execute a custom build process which is right now in BETA.");
-        log("");
-        Sys.print("Which OS are you building? [you can put more than one separeted by comma] (windows/mac/linux) ");
+        Sys.print("Which OS are you building? (windows/mac/linux) ");
         var osHelper = Sys.stdin().readLine();
-        var array = osHelper.split(",");
-        if(["w", "windows", "m", "mac", "l", "linux"].contains(array[0]))
+        var osArray = osHelper.split(",");
+        if(["w", "windows", "m", "mac", "l", "linux"].contains(osArray[0]))
         {
-            log("");
+            if(osArray.length > 1) {
+                log("You cannot test a build for more than one OS. Aborting...");
+                Sys.exit(1);
+            }
+
             Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
             var flagHelpder = Sys.stdin().readLine();
             if(flagHelpder.toLowerCase().trim() != "")
@@ -75,80 +84,18 @@ class Build
                 customFlags = flagHelpder;
             }
 
-            // starting compilation
-            var arrayOfOs = osHelper.split(",");
-            for(os in arrayOfOs)
+            switch(osHelper)
             {
-                osName = "";
-                if(os == 'windows' || os == 'w') osName = "Windows";
-                else if(os == 'mac' || os == 'm') osName = "Mac";
-                else if(os == 'linux' || os == 'l') osName = "Linux";
-
-                log("Building for " + osName + "...");
-                Sys.sleep(0.4);
-        
-                var curDirectory = Sys.args().copy().pop();
-                Sys.setCwd(curDirectory);
-
-                createBuildFile();
-
-                if(customFlags.contains("-reinstall")) reinstallLibraries();
-                
-                if(os == 'windows' || os == 'w')
-                {
-                    Sys.command("lime update windows -verbose " + customFlags);
-                    logProjectXMLData();
-                    Sys.command("lime build windows " + customFlags);
-                    calculateBuildTime();
-                }
-                else if(os == 'mac' || os == 'm') 
-                {
-                    Sys.command("lime update mac -verbose " + customFlags);
-                    logProjectXMLData();
-                    Sys.command("lime build mac " + customFlags);
-                    calculateBuildTime();
-                }
-                else if(os == 'linux' || os == 'l') 
-                {
-                    Sys.command("lime update linux -verbose " + customFlags);
-                    logProjectXMLData();
-                    Sys.command("lime build linux " + customFlags);
-                    calculateBuildTime();
-                }
+                case 'windows' | 'w':
+                    osName = "Windows";
+                case 'mac' | 'm':
+                    osName = "Mac";
+                case 'linux' | 'l':
+                    osName = "Linux";
+                default:
+                    log("Invalid OS. Aborting...");
+                    Sys.exit(1);
             }
-        }
-        else
-        {
-            log("Invalid OS. Aborting...");
-            Sys.exit(1);
-        }
-    }
-
-    // TO DO: merge this function with the one above, so we reduce the amount of code a ton
-    static function test()
-    {
-        log(warningText);
-        log("");
-        log("You're gonna execute a custom test process which is right now in BETA.");
-        log("");
-        Sys.print("Which OS are you building? [you can ONLY write one] (windows/mac/linux) ");
-        var osHelper = Sys.stdin().readLine();
-        if(["w", "windows", "m", "mac", "l", "linux"].contains(osHelper))
-        {
-            log("");
-            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
-            var flagHelpder = Sys.stdin().readLine();
-            if(flagHelpder.toLowerCase().trim() != "")
-            {
-                customFlags = flagHelpder;
-            }
-
-            // starting compilation
-            osName = osHelper;
-
-            if(osName == 'windows' || osName == 'w') osName = "Windows";
-            else if(osName == 'mac' || osName == 'm') osName = "Mac";
-            else if(osName == 'linux' || osName == 'l') osName = "Linux";
 
             log("Building for " + osName + "...");
             Sys.sleep(0.4);
@@ -167,26 +114,22 @@ class Build
             var command = Sys.command("lime build " + lowerCaseOsName + " " + customFlags);
             if(command != 0) return;
             calculateBuildTime();
-            Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
-        }
-        else
-        {
-            log("Invalid OS. Aborting...");
-            Sys.exit(1);
+            if(type == TEST) Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
         }
     }
 
     static function run()
     {
-        log(warningText);
-        log("");
-        log("You're gonna execute a custom test process which is right now in BETA.");
-        log("");
         Sys.print("Which OS are you running? [you can ONLY write one] (windows/mac/linux) ");
         var osHelper = Sys.stdin().readLine();
-        if(["w", "windows", "m", "mac", "l", "linux"].contains(osHelper))
+        var osArray = osHelper.split(",");
+        if(["w", "windows", "m", "mac", "l", "linux"].contains(osArray[0]))
         {
-            log("");
+            if(osArray.length > 1) {
+                log("You cannot test a build for more than one OS. Aborting...");
+                Sys.exit(1);
+            }
+
             Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
             var flagHelpder = Sys.stdin().readLine();
             if(flagHelpder.toLowerCase().trim() != "")
@@ -194,12 +137,18 @@ class Build
                 customFlags = flagHelpder;
             }
 
-            // starting compilation
-            osName = osHelper;
-
-            if(osName == 'windows' || osName == 'w') osName = "Windows";
-            else if(osName == 'mac' || osName == 'm') osName = "Mac";
-            else if(osName == 'linux' || osName == 'l') osName = "Linux";
+            switch(osHelper)
+            {
+                case 'windows' | 'w':
+                    osName = "Windows";
+                case 'mac' | 'm':
+                    osName = "Mac";
+                case 'linux' | 'l':
+                    osName = "Linux";
+                default:
+                    log("Invalid OS. Aborting...");
+                    Sys.exit(1);
+            }
 
             log("Running for " + osName + "...");
             Sys.sleep(0.4);
@@ -207,20 +156,10 @@ class Build
             var curDirectory = Sys.args().copy().pop();
             Sys.setCwd(curDirectory);
 
-            if(customFlags.contains("-reinstall")) log('Reinstall flag is not avaible here!');
-            
-            if(osHelper == 'windows' || osHelper == 'w')
-            {
-                Sys.command("lime run windows " + customFlags);
-            }
-            else if(osHelper == 'mac' || osHelper == 'm') 
-            {
-                Sys.command("lime run mac " + customFlags);
-            }
-            else if(osHelper == 'linux' || osHelper == 'l') 
-            {
-                Sys.command("lime run linux " + customFlags);
-            }
+            var lowerCaseOsName = osName.toLowerCase();
+
+            Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
+            Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
         }
         else
         {
