@@ -145,11 +145,28 @@ class ExtendedSprite extends FlxSprite
         FlxTween.tween(this, values, duration, options);
     }
 
-    public function getAllAddedAnimations():Map<String, String>
+    /**
+     * Gets all the added anims and returns them as a Map
+    **/
+    public function getAllAddedAnimations(format:AnimationFetchFormat = MAP):Either<Map<String, String>, Array<String>>
     {
         #if debug
         trace('Fetched anims: $addedAnimations');
         #end
+        switch(format)
+        {
+            case ARRAY:
+                // TO DO
+                // convert map to array
+            case MAP:
+                return addedAnimations;
+        }
         return addedAnimations;
     }
+}
+
+enum AnimationFetchFormat
+{
+    ARRAY;
+    MAP;
 }
