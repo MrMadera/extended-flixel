@@ -25,6 +25,8 @@ class ExtendedSprite extends FlxSprite
     **/
     public var elapsedTime:Float;
 
+    private var addedAnimations:Map<String, String> = new Map<String, String>();
+
     /**
      * Instantiates a new ExtendedSprite for usage.
      * 
@@ -75,6 +77,7 @@ class ExtendedSprite extends FlxSprite
         if(!isAnimated) return;
 
         animation.addByPrefix(name, anim, framerate, loop);
+        addedAnimations.set(name, anim); // adding anim to the map
     }
 
     /**
@@ -140,5 +143,13 @@ class ExtendedSprite extends FlxSprite
     public function doTween(values:Dynamic, duration:Float, ?options:TweenOptions)
     {
         FlxTween.tween(this, values, duration, options);
+    }
+
+    public function getAllAddedAnimations():Map<String, String>
+    {
+        #if debug
+        trace('Fetched anims: $addedAnimations');
+        #end
+        return addedAnimations;
     }
 }
