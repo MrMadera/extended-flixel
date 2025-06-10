@@ -163,6 +163,12 @@ class ExtendedSprite extends FlxSprite
         }
         return addedAnimations;
     }
+
+    public function deleteAnim(name:String)
+    {
+        if(animation.exists(name)) animation.remove(name);
+        else trace('You can\'t delete an animation that doesn\'t exist!');
+    }
 }
 
 enum AnimationFetchFormat
