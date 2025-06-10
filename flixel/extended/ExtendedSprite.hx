@@ -148,7 +148,7 @@ class ExtendedSprite extends FlxSprite
     /**
      * Gets all the added anims and returns them as a Map
     **/
-    public function getAllAddedAnimations(format:AnimationFetchFormat = MAP):Either<Map<String, String>, Array<String>>
+    public function getAllAddedAnimations(format:AnimationFetchFormat = MAP):Map<String, String>
     {
         #if debug
         trace('Fetched anims: $addedAnimations');
