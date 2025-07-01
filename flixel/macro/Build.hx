@@ -296,6 +296,7 @@ class Build
      */
     static function reinstallLibraries()
     {
+        log("Reinstalling libraries...", WARNING, true);
         Sys.command("hmm reinstall -f");
     }
 
