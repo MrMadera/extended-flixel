@@ -89,7 +89,7 @@ class Build
         var osArray = osHelper.split(",");
         if(["w", "windows", "m", "mac", "l", "linux"].contains(osArray[0]))
         {
-            if(osArray.length > 1) {
+            if(type == TEST && osArray.length > 1) {
                 log("You cannot test a build for more than one OS. Aborting...");
                 Sys.exit(1);
             }
