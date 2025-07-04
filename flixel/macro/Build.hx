@@ -122,6 +122,7 @@ class Build
 
             createBuildFile();
 
+            if(customFlags.contains("-install")) installLibraries();
             if(customFlags.contains("-reinstall")) reinstallLibraries();
 
             var lowerCaseOsName = osName.toLowerCase();
@@ -298,6 +299,15 @@ class Build
     {
         log("Reinstalling libraries...", WARNING, true);
         Sys.command("hmm reinstall -f");
+    }
+
+    /**
+     * Installs all of the libraries in `hmm.json` with CMD.
+     */
+    static function installLibraries()
+    {
+        log("Installing libraries...", WARNING, true);
+        Sys.command("hmm install -f");
     }
 
     /**
