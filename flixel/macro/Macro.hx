@@ -16,16 +16,6 @@ class Macro {
     public static function initiateMacro()
     {
         #if (!SKIP_MACRO)
-            // log('Building at ${Date.now()}');
-            // log('--------------- [MACRO ENABLED] ---------------');
-
-            // #if (debug || extended_macro) 
-            //     log(extendedFlixelText); 
-            // #end
-
-            // log('');
-            // log('Checking for internet connection...');
-
             logChunk([
                 'Building at ${Date.now()}',
 
@@ -42,6 +32,8 @@ class Macro {
 
             checkingInternetConnection();
             getLibraries();
+
+            log('-----------------------------------------------');
         #end
 
         return macro {};
