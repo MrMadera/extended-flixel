@@ -318,7 +318,7 @@ class Build
         var cwd = Sys.getCwd();
         cwd = Path.normalize(cwd);
 
-        if(isDebugMode || isVerboseMode) log('Seraching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
+        if(isDebugMode || isVerboseMode) log('Searching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
 
         var projectXML = File.getContent(cwd + '/project.xml');
         var appStuff = Xml.parse(projectXML).firstElement().elementsNamed("app"); // getting the first one cuz there are like a ton of app references????
