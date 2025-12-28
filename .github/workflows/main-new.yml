@@ -34,6 +34,6 @@ jobs:
               haxelib --global --quiet update haxelib
               haxelib install hxcpp --quiet
               cd tests
-              haxelib fixrepo
               haxelib --global --quiet install hmm
+              haxelib fixrepo
               haxelib run hmm install --quiet
