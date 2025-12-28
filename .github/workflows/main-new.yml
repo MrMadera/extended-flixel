@@ -35,6 +35,7 @@ jobs:
             with:
                 path: tests/.haxelib
                 key: BUILD
+                enableCrossOsArchive: true
 
 
     build-game:
@@ -77,6 +78,7 @@ jobs:
             with:
                 path: tests/.haxelib
                 key: BUILD
+                enableCrossOsArchive: true
 
           - name: Install extended-flixel
             run: |
