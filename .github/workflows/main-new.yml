@@ -38,7 +38,6 @@ jobs:
 
 
     linux-build:
-        needs: [cache-libraries]
         runs-on: ubuntu-latest
 
         steps:
@@ -55,7 +54,6 @@ jobs:
               sudo apt-get install libvlccore-dev
               cd tests
               haxelib newrepo
-              haxelib fixrepo
 
           - name: Download Cache
             uses: actions/cache@v4
