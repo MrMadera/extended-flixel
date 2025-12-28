@@ -36,9 +36,32 @@ jobs:
                   ${{ runner.os }}-build-
                   ${{ runner.os }}-
 
+    libraries-artifact:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v4
+          
+          - name: Download Cache
+            uses: actions/cache@v4
+            env:
+              cache-name: cache-node-modules
+            with:
+                path: tests/.haxelib
+                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-build-${{ env.cache-name }}-
+                  ${{ runner.os }}-build-
+                  ${{ runner.os }}-
+
+          - name: Upload libraries to Artifact
+            uses: actions/upload-artifact@v6
+            with:
+                path: 'tests/.haxelib'
+            
 
     linux-build:
-        needs: [cache-libraries]
+        needs: [libraries-artifact]
         runs-on: ubuntu-latest
 
         steps:
@@ -58,17 +81,10 @@ jobs:
               haxelib newrepo
               haxelib fixrepo
 
-          - name: Download Cache
-            uses: actions/cache@v4
-            env:
-              cache-name: cache-node-modules
+          - name: Download Artifact
+            uses: actions/download-artifact@v7
             with:
                 path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
 
           - name: Install extended-flixel
             run: |
