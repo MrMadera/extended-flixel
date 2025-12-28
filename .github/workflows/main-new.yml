@@ -22,7 +22,7 @@ jobs:
               haxelib --global --quiet update haxelib
               haxelib --global --quiet install hmm
               cd tests
-              haxelib --global --quiet run hmm install
+              haxelib run hmm install --quiet
 
           - name: Upload Cache
             uses: actions/cache@v4
