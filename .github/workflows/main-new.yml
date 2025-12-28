@@ -34,11 +34,10 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
                 restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
+                  -build-${{ env.cache-name }}-
+                  -build-
 
 
     linux-build:
@@ -65,11 +64,10 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
                 restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
+                  -build-${{ env.cache-name }}-
+                  -build-
 
           - name: Install extended-flixel
             run: |
@@ -113,11 +111,10 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
                 restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
+                  -build-${{ env.cache-name }}-
+                  -build-
 
           - name: Install extended-flixel
             run: |
@@ -160,11 +157,10 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
                 restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
+                  -build-${{ env.cache-name }}-
+                  -build-
 
           - name: Install extended-flixel
             run: |
