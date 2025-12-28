@@ -43,11 +43,11 @@ jobs:
           matrix:
             include:
               - target: windows
-                runs-on: windows
+                runs-on: windows-latest
               - target: macos
-                runs-on: macos
+                runs-on: macos-latest
               - target: linux
-                runs-on: linux
+                runs-on: ubuntu-latest
 
         runs-on: ${{ matrix.runs-on }}
 
