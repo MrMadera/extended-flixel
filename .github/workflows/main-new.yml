@@ -19,6 +19,7 @@ jobs:
 
           - name: Install libraries
             run: |
+              haxelib --global update haxelib
               haxelib install hxcpp --quiet
               cd tests
               haxelib --global --quiet install hmm
