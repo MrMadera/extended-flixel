@@ -5,6 +5,10 @@ on:
     pull_request:
     workflow_dispatch:
 
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     cache-libraries:
         runs-on: ubuntu-latest
@@ -79,4 +83,107 @@ jobs:
           - name: Compile
             run: | 
               cd tests
-              haxelib run lime build linux --app-version="4.0.0-${{ github.run_id }}"
+              haxelib run lime build linux -cpp --app-version="4.0.0-${{ github.run_id }}"
+
+          - name: Upload artifact
+            uses: actions/upload-artifact@v4
+            with:
+              path: tests/export/linux/bin
+              name: linux-build
+              retention-days: 1
+    windows:
+        runs-on: windows-latest
+
+        steps:
+          - uses: actions/checkout@v4
+
+          - name: Setup Haxe
+            uses: krdlab/setup-haxe@master
+            with:
+              haxe-version: 4.3.6
+
+          - name: Warming up libraries
+            run: |
+              cd tests
+              haxelib newrepo
+
+          - name: Download Cache
+            uses: actions/cache@v4
+            env:
+              cache-name: cache-node-modules
+            with:
+                path: tests/.haxelib
+                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-build-${{ env.cache-name }}-
+                  ${{ runner.os }}-build-
+                  ${{ runner.os }}-
+
+          - name: Install extended-flixel
+            run: |
+                cd tests
+                haxelib --global --quiet git extended-flixel https://github.com/MrMadera/extended-flixel 
+                haxelib git --quiet extended-flixel https://github.com/MrMadera/extended-flixel 
+              
+          - name: Create Version Tag
+            run: echo "${{ github.run_id }}" > VERSION
+
+          - name: Compile
+            run: cmd /c "cd tests & haxelib run lime build windows --app-version="4.0.0-${{ github.run_id }}"
+            shell: cmd
+
+          - name: Upload artifact
+            uses: actions/upload-artifact@v4
+            with:
+              path: tests/export/windows/bin
+              name: windowsBuild
+              retention-days: 1
+    mac:
+        runs-on: macos-latest
+
+        steps:
+          - uses: actions/checkout@v4
+
+          - name: Setup Haxe
+            uses: krdlab/setup-haxe@master
+            with:
+              haxe-version: 4.3.6
+
+          - name: Warming up libraries
+            run: |
+              cd tests
+              haxelib newrepo
+
+          - name: Download Cache
+            uses: actions/cache@v4
+            env:
+              cache-name: cache-node-modules
+            with:
+                path: tests/.haxelib
+                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-build-${{ env.cache-name }}-
+                  ${{ runner.os }}-build-
+                  ${{ runner.os }}-
+
+          - name: Install extended-flixel
+            run: |
+                cd tests
+                haxelib --global --quiet git extended-flixel https://github.com/MrMadera/extended-flixel 
+                haxelib git --quiet extended-flixel https://github.com/MrMadera/extended-flixel 
+
+          - name: Create Version Tag
+            run: echo "${{ github.run_id }}" > VERSION
+
+          - name: Compile
+            run: |
+              cd tests 
+              haxelib run lime build mac -cpp --app-version="4.0.0-${{ github.run_id }}"
+            shell: bash
+
+          - name: Upload artifact
+            uses: actions/upload-artifact@v4
+            with:
+              path: tests/export/macos/bin
+              name: macBuild
+              retention-days: 1
