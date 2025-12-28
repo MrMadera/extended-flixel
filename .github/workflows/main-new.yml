@@ -38,6 +38,12 @@ jobs:
                   ${{ runner.os }}-build-
                   ${{ runner.os }}-
 
+          - name: Install extended-flixel
+            run: |
+                cd tests
+                haxelib --global git extended-flixel https://github.com/MrMadera/extended-flixel 
+                haxelib git extended-flixel https://github.com/MrMadera/extended-flixel 
+
           - name: Create Version Tag
             run: echo "${{ github.run_id }}" > VERSION
 
