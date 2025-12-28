@@ -59,10 +59,14 @@ jobs:
             with:
               haxe-version: 4.3.6
 
-          - name: Warming up libraries
+          - name: Installing VLC
+            if: ${{matrix.target == 'linux'}}
             run: |
               sudo apt-get install libvlc-dev
               sudo apt-get install libvlccore-dev
+
+          - name: Warming up libraries
+            run: |
               cd tests
               haxelib newrepo
 
