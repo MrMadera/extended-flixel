@@ -51,10 +51,9 @@ jobs:
 
           - name: Warming up libraries
             run: |
-              haxelib --global --quiet update haxelib
-              haxelib install hxcpp --quiet
+              sudo apt-get install libvlc-dev
+              sudo apt-get install libvlccore-dev
               cd tests
-              haxelib --global --quiet install hmm
               haxelib newrepo
               haxelib fixrepo
 
