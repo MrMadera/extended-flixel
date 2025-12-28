@@ -34,10 +34,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  -build-${{ env.cache-name }}-
-                  -build-
+                key: BUILD
 
 
     linux-build:
@@ -64,10 +61,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  -build-${{ env.cache-name }}-
-                  -build-
+                key: BUILD
 
           - name: Install extended-flixel
             run: |
@@ -111,10 +105,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  -build-${{ env.cache-name }}-
-                  -build-
+                key: BUILD
 
           - name: Install extended-flixel
             run: |
@@ -157,10 +148,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: -build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  -build-${{ env.cache-name }}-
-                  -build-
+                key: BUILD
 
           - name: Install extended-flixel
             run: |
