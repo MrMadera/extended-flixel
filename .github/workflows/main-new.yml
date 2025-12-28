@@ -37,15 +37,3 @@ jobs:
               haxelib --global --quiet install hmm
               haxelib fixrepo
               haxelib run hmm install --quiet
-
-          - name: Upload Cache
-            uses: actions/cache@v4
-            env:
-              cache-name: cache-node-modules
-            with:
-                path: tests/.haxelib
-                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
-                restore-keys: |
-                  ${{ runner.os }}-build-${{ env.cache-name }}-
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
