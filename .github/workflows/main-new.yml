@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    install-dependencies:
+    linux-build:
         runs-on: ubuntu-latest
 
         steps:
