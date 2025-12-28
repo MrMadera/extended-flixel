@@ -29,12 +29,12 @@ jobs:
               haxelib run hmm install --quiet
 
           - name: Upload Cache
-            uses: actions/cache@v4
+            uses: actions/cache@v5
             env:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: BUILD
+                key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
 
 
@@ -53,12 +53,12 @@ jobs:
         runs-on: ${{ matrix.runs-on }}
 
         steps:
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@v5
 
           - name: Setup Haxe
             uses: krdlab/setup-haxe@master
             with:
-              haxe-version: 4.3.6
+              haxe-version: 4.3.7
 
           - name: Installing VLC
             if: ${{matrix.target == 'linux'}}
@@ -72,12 +72,12 @@ jobs:
               haxelib newrepo
 
           - name: Download Cache
-            uses: actions/cache@v4
+            uses: actions/cache@v5
             env:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: BUILD
+                key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
 
           - name: Install extended-flixel
