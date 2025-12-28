@@ -1,0 +1,38 @@
+name: Continious Integration
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    install-dependencies:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v4
+
+          - name: Setup Haxe
+            uses: krdlab/setup-haxe@master
+            with:
+              haxe-version: 4.3.6
+
+          - name: Install libraries
+            run: |
+              haxelib install hxcpp --quiet
+              cd tests
+              haxelib --global --quiet install hmm
+              haxelib run hmm setup
+              haxelib run hmm install --quiet
+            shell: cmd
+          - name: Cache Gradle packages
+            uses: actions/cache@v4
+            env:
+              cache-name: cache-node-modules
+            with:
+                path: tests/.haxelib
+                key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/tests/hmm.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-build-${{ env.cache-name }}-
+                  ${{ runner.os }}-build-
+                  ${{ runner.os }}-
