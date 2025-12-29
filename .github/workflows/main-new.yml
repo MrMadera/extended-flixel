@@ -39,6 +39,7 @@ jobs:
 
 
     build-game:
+        needs: [cache-libraries]
         strategy:
           fail-fast: false
           matrix:
