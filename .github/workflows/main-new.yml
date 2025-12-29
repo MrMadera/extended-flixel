@@ -34,7 +34,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: BUILD
+                key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
 
 
@@ -77,7 +77,7 @@ jobs:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
-                key: BUILD
+                key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
 
           - name: Install extended-flixel
