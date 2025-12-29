@@ -52,13 +52,13 @@ jobs:
             include:
               - target: windows
                 runs-on: windows-latest
-                executable-path: tests/export/release/windows/bin
+                executable-path: tests/export/windows/bin
               - target: macos
                 runs-on: macos-latest
-                executable-path: tests/export/release/macos/bin
+                executable-path: tests/export/macos/bin
               - target: linux
                 runs-on: ubuntu-latest
-                executable-path: tests/export/release/linux/bin
+                executable-path: tests/export/linux/bin
 
         runs-on: ${{ matrix.runs-on }}
 
