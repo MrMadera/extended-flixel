@@ -90,14 +90,6 @@ jobs:
                 key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
 
-          - name: Download EXPORT cache
-            uses: actions/cache@v5
-            with:
-                path: ${{matrix.executable-path}}
-                key: EXPORT-${{runner.os}}
-                restore-keys: |
-                  EXPORT-
-
           - name: Install extended-flixel
             run: |
                 cd tests
