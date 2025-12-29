@@ -27,6 +27,7 @@ jobs:
                 enableCrossOsArchive: true
 
           - name: Setup Haxe
+            if: ${{steps.cache-instance.outputs.cache-hit != 'true'}}
             uses: krdlab/setup-haxe@master
             with:
               haxe-version: 4.3.7
