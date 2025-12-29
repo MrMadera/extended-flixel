@@ -16,26 +16,28 @@ jobs:
         steps:
           - uses: actions/checkout@v4
 
-          - name: Setup Haxe
-            uses: krdlab/setup-haxe@master
-            with:
-              haxe-version: 4.3.6
-
-          - name: Install libraries
-            run: |
-              haxelib --global --quiet update haxelib
-              haxelib --global --quiet install hmm
-              cd tests
-              haxelib run hmm install --quiet
-
-          - name: Upload Cache
+          - name: Check Cache Instance
             uses: actions/cache@v5
+            id: cache-instance
             env:
               cache-name: cache-node-modules
             with:
                 path: tests/.haxelib
                 key: BUILD-${{ hashFiles('tests/hmm.json') }}
                 enableCrossOsArchive: true
+
+          - name: Setup Haxe
+            uses: krdlab/setup-haxe@master
+            with:
+              haxe-version: 4.3.7
+
+          - name: Install libraries
+            if: ${{steps.cache-instance.outputs.cache-hit != 'true'}}
+            run: |
+              haxelib --global --quiet update haxelib
+              haxelib --global --quiet install hmm
+              cd tests
+              haxelib run hmm install --quiet
 
 
     build-game:
