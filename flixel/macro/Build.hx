@@ -318,7 +318,11 @@ class Build
         var cwd = Sys.getCwd();
         cwd = Path.normalize(cwd);
 
-        if(isDebugMode || isVerboseMode) log('Searching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
+        if(isDebugMode || isVerboseMode) 
+        {
+            log('');
+            log('Searching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
+        }
 
         var projectXML = File.getContent(cwd + '/project.xml');
         var appStuff = Xml.parse(projectXML).firstElement().elementsNamed("app"); // getting the first one cuz there are like a ton of app references????
@@ -335,10 +339,15 @@ class Build
         if (app != null) {
             var title = app.get("title");
             var version = app.get("version");
+            var company = app.get("company");
+            var file = app.get("file");
 
             log();
-            log(' - Project title: ' + title, NORMAL, true);
-            log(' - Project version: ' + version, NORMAL, true);
+            log(' - Title: ' + title, NORMAL, true);
+            log(' - Version: ' + version, NORMAL, true);
+            log(' - Company: ' + company, NORMAL, true);
+            log(' - Executable name: ' + file, NORMAL, true);
+            log(' - Saves path: ' + company + '/' + file, NORMAL, true);
             log();
         } else {
             log("Could not find an <app> node with title and version.", ERROR, true);

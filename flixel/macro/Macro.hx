@@ -18,6 +18,7 @@ class Macro {
         #if (!SKIP_MACRO)
             logChunk([
                 'Building at ${Date.now()}',
+                '',
 
                 '--------------- [MACRO ENABLED] ---------------',
 
