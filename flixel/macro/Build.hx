@@ -80,11 +80,7 @@ class Build
                 function executeShit(realPath:String, path:String)
                 {
                     Sys.command("chmod", ["+x", realPath]);
-                    Sys.command("sudo", ["rm", path]);
-                    Sys.command("sudo", ["ln", "-s", realPath, path]);
-
-                    Sys.command("chmod", ["+x", realPath]);
-                    Sys.command("sudo", ["rm", path]);
+                    Sys.command("sudo", ["rm", "-f", path]);
                     Sys.command("sudo", ["ln", "-s", realPath, path]);
                 }
 
