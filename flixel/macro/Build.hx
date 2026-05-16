@@ -74,8 +74,8 @@ class Build
                 var realPathExpanded = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
                 var pathExpanded = "/usr/local/bin/extended-flixel";
 
-                var realPathReduced = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
-                var pathReduced = "/usr/local/bin/extended-flixel";
+                var realPathReduced = Path.join([Path.directory(Sys.programPath()), "ef"]);
+                var pathReduced = "/usr/local/bin/ef";
 
                 function executeShit(realPath:String, path:String)
                 {
