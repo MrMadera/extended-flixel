@@ -67,9 +67,10 @@ class Build
                 Sys.exit(1);
             }
             else {
-                // do macos/linux setup
-
-                var realPath = Path.join([Sys.getCwd(), "extended-flixel"]);
+                
+                var args = Sys.args();
+                var libDir = args[args.length - 1];
+                var realPath = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
                 var path = "/usr/local/bin/extended-flixel";
 
                 Sys.command("chmod", ["+x", realPath]);
