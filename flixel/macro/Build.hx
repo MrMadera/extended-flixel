@@ -70,12 +70,26 @@ class Build
                 
                 var args = Sys.args();
                 var libDir = args[args.length - 1];
-                var realPath = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
-                var path = "/usr/local/bin/extended-flixel";
 
-                Sys.command("chmod", ["+x", realPath]);
-                Sys.command("sudo", ["rm", path]);
-                Sys.command("sudo", ["ln", "-s", realPath, path]);
+                var realPathExpanded = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
+                var pathExpanded = "/usr/local/bin/extended-flixel";
+
+                var realPathReduced = Path.join([Path.directory(Sys.programPath()), "extended-flixel"]);
+                var pathReduced = "/usr/local/bin/extended-flixel";
+
+                function executeShit(realPath:String, path:String)
+                {
+                    Sys.command("chmod", ["+x", realPath]);
+                    Sys.command("sudo", ["rm", path]);
+                    Sys.command("sudo", ["ln", "-s", realPath, path]);
+
+                    Sys.command("chmod", ["+x", realPath]);
+                    Sys.command("sudo", ["rm", path]);
+                    Sys.command("sudo", ["ln", "-s", realPath, path]);
+                }
+
+                executeShit(realPathExpanded, pathExpanded);
+                executeShit(realPathReduced, pathReduced);
 
                 log("Done. (Linux/MacOS setup)");
                 Sys.exit(1);
