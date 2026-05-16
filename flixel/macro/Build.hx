@@ -110,56 +110,47 @@ class Build
         log(warningText);
         log();
         log("You're gonna execute a custom build process which is right now in BETA.");
-        Sys.print("Which OS are you building? (windows/mac/linux) ");
-        var osHelper = Sys.stdin().readLine();
-        var osArray = osHelper.split(",");
-        if(["w", "windows", "m", "mac", "l", "linux"].contains(osArray[0]))
+        
+        Sys.print("Write here your custom flags (press enter to skip): ");
+        var flagHelpder = Sys.stdin().readLine();
+        if(flagHelpder.toLowerCase().trim() != "")
         {
-            if(type == TEST && osArray.length > 1) {
-                log("You cannot test a build for more than one OS. Aborting...");
-                Sys.exit(1);
-            }
-
-            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
-            var flagHelpder = Sys.stdin().readLine();
-            if(flagHelpder.toLowerCase().trim() != "")
-            {
-                customFlags = flagHelpder;
-            }
-
-            switch(osHelper)
-            {
-                case 'windows' | 'w':
-                    osName = "Windows";
-                case 'mac' | 'm':
-                    osName = "Mac";
-                case 'linux' | 'l':
-                    osName = "Linux";
-                default:
-                    log("Invalid OS. Aborting...");
-                    Sys.exit(1);
-            }
-
-            log("Building for " + osName + "...");
-            Sys.sleep(0.4);
-    
-            var curDirectory = Sys.args().copy().pop();
-            Sys.setCwd(curDirectory);
-
-            createBuildFile();
-
-            if(customFlags.contains("-install")) installLibraries();
-            if(customFlags.contains("-reinstall")) reinstallLibraries();
-
-            var lowerCaseOsName = osName.toLowerCase();
-
-            Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
-            logProjectXMLData();
-            var command = Sys.command("lime build " + lowerCaseOsName + " " + customFlags);
-            if(command != 0) return;
-            calculateBuildTime();
-            if(type == TEST) Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
+            customFlags = flagHelpder;
         }
+
+        var osHelper = Sys.systemName().toLowerCase();
+        switch(osHelper)
+        {
+            case 'windows' | 'w':
+                osName = "Windows";
+            case 'mac' | 'm':
+                osName = "Mac";
+            case 'linux' | 'l':
+                osName = "Linux";
+            default:
+                log("Invalid OS. Aborting...");
+                Sys.exit(1);
+        }
+
+        log("Building for " + osName + "...");
+        Sys.sleep(0.4);
+    
+        var curDirectory = Sys.args().copy().pop();
+        Sys.setCwd(curDirectory);
+
+        createBuildFile();
+
+        if(customFlags.contains("-install")) installLibraries();
+        if(customFlags.contains("-reinstall")) reinstallLibraries();
+
+        var lowerCaseOsName = osName.toLowerCase();
+
+        Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
+        logProjectXMLData();
+        var command = Sys.command("lime build " + lowerCaseOsName + " " + customFlags);
+        if(command != 0) return;
+        calculateBuildTime();
+        if(type == TEST) Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
     }
 
     /**
@@ -167,52 +158,37 @@ class Build
      */
     static function run()
     {
-        Sys.print("Which OS are you running? [you can ONLY write one] (windows/mac/linux) ");
-        var osHelper = Sys.stdin().readLine();
-        var osArray = osHelper.split(",");
-        if(["w", "windows", "m", "mac", "l", "linux"].contains(osArray[0]))
+        Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
+        var flagHelpder = Sys.stdin().readLine();
+        if(flagHelpder.toLowerCase().trim() != "")
         {
-            if(osArray.length > 1) {
-                log("You cannot test a build for more than one OS. Aborting...");
+            customFlags = flagHelpder;
+        }
+
+        var osHelper = Sys.systemName().toLowerCase();
+        switch(osHelper)
+        {
+            case 'windows' | 'w':
+                osName = "Windows";
+            case 'mac' | 'm':
+                osName = "Mac";
+            case 'linux' | 'l':
+                osName = "Linux";
+            default:
+                log("Invalid OS. Aborting...");
                 Sys.exit(1);
-            }
+        }
 
-            Sys.print("Write here your custom flags (if you don't want to use any, just press enter): ");
-            var flagHelpder = Sys.stdin().readLine();
-            if(flagHelpder.toLowerCase().trim() != "")
-            {
-                customFlags = flagHelpder;
-            }
-
-            switch(osHelper)
-            {
-                case 'windows' | 'w':
-                    osName = "Windows";
-                case 'mac' | 'm':
-                    osName = "Mac";
-                case 'linux' | 'l':
-                    osName = "Linux";
-                default:
-                    log("Invalid OS. Aborting...");
-                    Sys.exit(1);
-            }
-
-            log("Running for " + osName + "...");
-            Sys.sleep(0.4);
+        log("Running for " + osName + "...");
+        Sys.sleep(0.4);
     
-            var curDirectory = Sys.args().copy().pop();
-            Sys.setCwd(curDirectory);
+        var curDirectory = Sys.args().copy().pop();
+        Sys.setCwd(curDirectory);
 
-            var lowerCaseOsName = osName.toLowerCase();
+        var lowerCaseOsName = osName.toLowerCase();
 
-            Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
-            Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
-        }
-        else
-        {
-            log("Invalid OS. Aborting...");
-            Sys.exit(1);
-        }
+        Sys.command("lime update " + lowerCaseOsName + " -verbose " + customFlags);
+        Sys.command("lime run " + lowerCaseOsName + " " + customFlags);
     }
 
     /**
@@ -350,7 +326,17 @@ class Build
             log('Searching project.xml file in the following directory: $cwd', AFFIRMATIVE, true);
         }
 
-        var projectXML = File.getContent(cwd + '/project.xml');
+        var projectXML:Dynamic;
+        try
+        {
+            projectXML = File.getContent(cwd + '/project.xml');
+        }
+        catch(exc)
+        {
+            log("Could not read project.xml file.", ERROR, true);
+            return;
+        }
+
         var appStuff = Xml.parse(projectXML).firstElement().elementsNamed("app"); // getting the first one cuz there are like a ton of app references????
 
         var app = null;
