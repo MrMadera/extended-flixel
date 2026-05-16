@@ -61,9 +61,24 @@ class Build
         var haxePath = Sys.getEnv("HAXEPATH");
         if(haxePath == null)
         {
-            // aborting...
-            log("ERROR: HAXEPATH is not defined. Aborting...");
-            Sys.exit(1);
+            if(Sys.systemName() == "Windows") {
+                // aborting...
+                log("ERROR: HAXEPATH is not defined. Aborting...");
+                Sys.exit(1);
+            }
+            else {
+                // do macos/linux setup
+
+                var realPath = Path.join([Sys.getCwd(), "extended-flixel"]);
+                var path = "/usr/local/bin/extended-flixel";
+
+                Sys.command("chmod", ["+x", realPath]);
+                Sys.command("sudo", ["rm", path]);
+                Sys.command("sudo", ["ln", "-s", realPath, path]);
+
+                log("Done. (Linux/MacOS setup)");
+                Sys.exit(1);
+            }
         }
         var filePath = haxePath + '/extended-flixel.cmd';
         var filePath2 = haxePath + '/ef.cmd';
@@ -71,7 +86,7 @@ class Build
         File.saveContent(filePath, cmdContent);
         File.saveContent(filePath2, cmdContent);
 
-        log("Done.");
+        log("Done. (Windows setup)");
     }
 
     /**
